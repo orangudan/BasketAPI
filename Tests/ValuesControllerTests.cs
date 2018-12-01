@@ -12,7 +12,7 @@ namespace Tests
         {
             var controller = new ValuesController();
             var result = controller.Get();
-            Assert.That(result.Value, Is.EqualTo(new[] { "value1", "value2" }));
+            Assert.That(result.Value, Is.EqualTo(new[] { "value1", "fail" }));
         }
     }
 }
