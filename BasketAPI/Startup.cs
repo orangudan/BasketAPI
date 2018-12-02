@@ -31,9 +31,9 @@ namespace BasketAPI
             return basket;
         }
 
-        public BasketItem AddBasketItem(Basket basket, Guid productId)
+        public BasketItem AddBasketItem(Basket basket, Guid productId, int quantity)
         {
-            var basketItem = new BasketItem { ProductId = productId };
+            var basketItem = new BasketItem { ProductId = productId, Quantity = quantity };
             basket.Items.Add(basketItem);
             return basketItem;
         }

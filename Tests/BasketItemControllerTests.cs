@@ -77,15 +77,24 @@ namespace Tests
             var basketItem = (BasketItem)((OkObjectResult)result).Value;
             Assert.That(basketItem.ProductId, Is.EqualTo(NewlyAddedProductId));
         }
+
+        [Test]
+        public void result_contains_quantity()
+        {
+            var result = _controller.Post(FoundBasketId, new AddBasketItem { ProductId = NewlyAddedProductId, Quantity = 3 });
+            var basketItem = (BasketItem)((OkObjectResult)result).Value;
+            Assert.That(basketItem.Quantity, Is.EqualTo(3));
+        }
     }
 
     public class InMemoryBasketItemAdder : IBasketItemAdder
     {
-        public BasketItem AddBasketItem(Basket basket, Guid productId)
+        public BasketItem AddBasketItem(Basket basket, Guid productId, int quantity)
         {
             var basketItem = new BasketItem
             {
-                ProductId = productId
+                ProductId = productId,
+                Quantity = quantity
             };
             basket.Items.Add(basketItem);
             return basketItem;

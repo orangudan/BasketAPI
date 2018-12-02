@@ -41,7 +41,7 @@ namespace BasketAPI.Controllers
             if (basket == null)
                 return NotFound();
 
-            var newBasketItem = _basketItemAdder.AddBasketItem(basket, request.ProductId);
+            var newBasketItem = _basketItemAdder.AddBasketItem(basket, request.ProductId, request.Quantity);
 
             return Ok(newBasketItem);
         }
@@ -50,5 +50,6 @@ namespace BasketAPI.Controllers
     public class AddBasketItem
     {
         public Guid ProductId { get; set; }
+        public int Quantity { get; set; }
     }
 }
