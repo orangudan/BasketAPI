@@ -110,10 +110,10 @@ namespace Tests
         }
 
         [Test]
-        public void Delete_returns_ok_if_deleted()
+        public void Delete_returns_no_content_if_deleted()
         {
             var result = _controller.Delete(FoundBasketId, FoundItemId);
-            Assert.That(result, Is.TypeOf<OkResult>());
+            Assert.That(result, Is.TypeOf<NoContentResult>());
         }
     }
 }

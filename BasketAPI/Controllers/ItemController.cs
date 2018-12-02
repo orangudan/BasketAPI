@@ -70,7 +70,7 @@ namespace BasketAPI.Controllers
         }
 
         [HttpDelete("{itemId}")]
-        [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         public ActionResult Delete(Guid basketId, Guid itemId)
         {
@@ -85,7 +85,7 @@ namespace BasketAPI.Controllers
 
             basket.Items.Remove(item);
 
-            return Ok();
+            return NoContent();
         }
     }
 
