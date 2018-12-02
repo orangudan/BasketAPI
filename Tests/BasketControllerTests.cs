@@ -21,10 +21,17 @@ namespace Tests
         {
             var baskets = new List<Basket>
             {
-                new Basket {Id = FoundBasketId}
+                new Basket
+                {
+                    Id = FoundBasketId,
+                    Items = new List<BasketItem>
+                    {
+                        new BasketItem()
+                    }
+                }
             };
 
-            _controller =  new BasketController(
+            _controller = new BasketController(
                 new InMemoryBasketQuery(baskets),
                 new InMemoryBasketAdder(NewlyCreatedBasketId));
         }
@@ -42,6 +49,14 @@ namespace Tests
             var result = _controller.Get(FoundBasketId);
             Assert.That(result, Is.TypeOf<OkObjectResult>());
             Assert.That(((OkObjectResult)result).Value, Is.TypeOf<Basket>());
+        }
+
+        [Test]
+        public void get_returns_basket_items()
+        {
+            var result = _controller.Get(FoundBasketId);
+            var basket = (Basket)((OkObjectResult)result).Value;
+            Assert.That(basket.Items.Any(), Is.True);
         }
 
         [Test]

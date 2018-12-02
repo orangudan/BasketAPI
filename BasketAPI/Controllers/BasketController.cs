@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 
 namespace BasketAPI.Controllers
 {
@@ -38,6 +39,7 @@ namespace BasketAPI.Controllers
     public class Basket
     {
         public Guid Id { get; set; }
+        public List<BasketItem> Items { get; set; } = new List<BasketItem>();
     }
 
     public interface IBasketQuery
