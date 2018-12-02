@@ -17,27 +17,31 @@ namespace BasketAPI.Controllers
         }
 
         [HttpPost("{basketId}")]
-        public ActionResult Post(Guid basketId, [FromBody]Guid productId)
+        public ActionResult Post(Guid basketId, AddBasketItem request)
         {
             var basket = _baskets.FindById(basketId);
 
             if (basket == null)
                 return NotFound();
 
-            var newBasketItem = _basketItemAdder.AddBasketItem(productId);
+            var newBasketItem = _basketItemAdder.AddBasketItem(basket, request.ProductId);
 
             return Ok(newBasketItem);
         }
     }
 
+    public class AddBasketItem
+    {
+        public Guid ProductId { get; set; }
+    }
+
     public class BasketItem
     {
-        public Guid Id { get; set; }
         public Guid ProductId { get; set; }
     }
 
     public interface IBasketItemAdder
     {
-        BasketItem AddBasketItem(Guid productId);
+        BasketItem AddBasketItem(Basket basket, Guid productId);
     }
 }

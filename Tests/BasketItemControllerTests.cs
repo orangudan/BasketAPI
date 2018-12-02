@@ -26,36 +26,28 @@ namespace Tests
 
             _controller = new BasketItemController(
                 new InMemoryBasketQuery(_baskets),
-                new InMemoryBasketItemAdder(NewBasketItemId));
+                new InMemoryBasketItemAdder());
         }
 
         [Test]
         public void result_is_not_found_when_basket_doesnt_exist()
         {
-            var result = _controller.Post(NotFoundBasketId, ProductId);
+            var result = _controller.Post(NotFoundBasketId, new AddBasketItem { ProductId = ProductId });
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
         public void result_contains_newly_created_basket_item()
         {
-            var result = _controller.Post(FoundBasketId, ProductId);
+            var result = _controller.Post(FoundBasketId, new AddBasketItem { ProductId = ProductId });
             Assert.That(result, Is.TypeOf<OkObjectResult>());
             Assert.That(((OkObjectResult)result).Value, Is.TypeOf<BasketItem>());
         }
 
         [Test]
-        public void result_contains_basket_item_id()
-        {
-            var result = _controller.Post(FoundBasketId, ProductId);
-            var basketItem = (BasketItem)((OkObjectResult)result).Value;
-            Assert.That(basketItem.Id, Is.EqualTo(NewBasketItemId));
-        }
-
-        [Test]
         public void result_contains_product_id()
         {
-            var result = _controller.Post(FoundBasketId, ProductId);
+            var result = _controller.Post(FoundBasketId, new AddBasketItem { ProductId = ProductId });
             var basketItem = (BasketItem)((OkObjectResult)result).Value;
             Assert.That(basketItem.ProductId, Is.EqualTo(ProductId));
         }
@@ -63,20 +55,14 @@ namespace Tests
 
     public class InMemoryBasketItemAdder : IBasketItemAdder
     {
-        private Guid _generatedId;
-
-        public InMemoryBasketItemAdder(Guid generatedId)
+        public BasketItem AddBasketItem(Basket basket, Guid productId)
         {
-            _generatedId = generatedId;
-        }
-
-        public BasketItem AddBasketItem(Guid productId)
-        {
-            return new BasketItem
+            var basketItem = new BasketItem
             {
-                Id = _generatedId,
                 ProductId = productId
             };
+            basket.Items.Add(basketItem);
+            return basketItem;
         }
     }
 }
