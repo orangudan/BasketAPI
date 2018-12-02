@@ -4,6 +4,7 @@ using BasketAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Tests
@@ -79,6 +80,30 @@ namespace Tests
             var basketItem = (BasketItem)((OkObjectResult)result).Value;
             Assert.That(basketItem.ProductId, Is.EqualTo(NewlyAddedProductId));
             Assert.That(basketItem.Quantity, Is.EqualTo(3));
+        }
+
+        [Test]
+        public void update_returns_not_found_if_basket_missing()
+        {
+            var result = _controller.Update(NotFoundBasketId, FoundProductId, new UpdateBasketItem { Quantity = 5 });
+            Assert.That(result, Is.TypeOf<NotFoundResult>());
+        }
+
+        [Test]
+        public void update_returns_not_found_if_basket_item_missing()
+        {
+            var result = _controller.Update(FoundBasketId, NotFoundProductId, new UpdateBasketItem { Quantity = 5 });
+            Assert.That(result, Is.TypeOf<NotFoundResult>());
+        }
+
+        [Test]
+        public void update_returns_updated_basket_item_if_it_exists()
+        {
+            var result = _controller.Update(FoundBasketId, FoundProductId, new UpdateBasketItem { Quantity = 33 });
+            Assert.That(result, Is.TypeOf<OkObjectResult>());
+            Assert.That(((OkObjectResult)result).Value, Is.TypeOf<BasketItem>());
+            var basketItem = (BasketItem)((OkObjectResult)result).Value;
+            Assert.That(basketItem.Quantity, Is.EqualTo(33));
         }
     }
 

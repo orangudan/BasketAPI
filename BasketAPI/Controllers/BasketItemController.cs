@@ -45,11 +45,33 @@ namespace BasketAPI.Controllers
 
             return Ok(newBasketItem);
         }
+
+        [HttpPatch("{basketId}/{basketItemId}")]
+        public ActionResult Update(Guid basketId, Guid basketItemId, UpdateBasketItem updateBasketItem)
+        {
+            var basket = _baskets.FindById(basketId);
+
+            if (basket == null)
+                return NotFound();
+
+            var basketItem = basket.Items.SingleOrDefault(i => i.ProductId == basketItemId);
+            if (basketItem == null)
+                return NotFound();
+
+            basketItem.Quantity = updateBasketItem.Quantity;
+
+            return Ok(basketItem);
+        }
     }
 
     public class AddBasketItem
     {
         public Guid ProductId { get; set; }
+        public int Quantity { get; set; }
+    }
+
+    public class UpdateBasketItem
+    {
         public int Quantity { get; set; }
     }
 }
