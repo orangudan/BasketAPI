@@ -10,10 +10,12 @@ namespace BasketAPI.Controllers
     public class BasketItemController : ControllerBase
     {
         private IEnumerable<Basket> _baskets;
+        private Func<BasketItem> _basketItemAdder;
 
-        public BasketItemController(IEnumerable<Basket> baskets)
+        public BasketItemController(IEnumerable<Basket> baskets, Func<BasketItem> basketItemAdder)
         {
             _baskets = baskets;
+            _basketItemAdder = basketItemAdder;
         }
 
         [HttpPost("{basketId}")]
@@ -24,12 +26,14 @@ namespace BasketAPI.Controllers
             if (basket == null)
                 return NotFound();
 
-            return Ok(new BasketItem());
+            var newBasketItem = _basketItemAdder();
+
+            return Ok(newBasketItem);
         }
     }
 
     public class BasketItem
     {
-
+        public Guid Id { get; set; }
     }
 }
