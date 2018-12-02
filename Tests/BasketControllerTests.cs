@@ -46,7 +46,7 @@ namespace Tests
         }
 
         [Test]
-        public void get_returns_basket_if_basket_exists()
+        public void get_returns_basket_if_it_exists()
         {
             var result = _controller.Get(FoundBasketId);
             Assert.That(result, Is.TypeOf<OkObjectResult>());
@@ -54,7 +54,7 @@ namespace Tests
         }
 
         [Test]
-        public void get_returns_basket_items()
+        public void get_includes_basket_items_in_response()
         {
             var result = _controller.Get(FoundBasketId);
             var basket = (Basket)((OkObjectResult)result).Value;
@@ -62,24 +62,18 @@ namespace Tests
         }
 
         [Test]
-        public void result_is_ok_when_basket_created()
+        public void post_returns_ok()
         {
             var result = _controller.Post();
             Assert.That(result, Is.TypeOf<OkObjectResult>());
         }
 
         [Test]
-        public void result_contains_newly_created_basket()
+        public void post_returns_newly_created_basket()
         {
             var result = _controller.Post();
             Assert.That(result, Is.TypeOf<OkObjectResult>());
             Assert.That(((OkObjectResult)result).Value, Is.TypeOf<Basket>());
-        }
-
-        [Test]
-        public void result_contains_basket_id()
-        {
-            var result = _controller.Post();
             var basket = (Basket)((OkObjectResult)result).Value;
             Assert.That(basket.Id, Is.EqualTo(NewlyCreatedBasketId));
         }
