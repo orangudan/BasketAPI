@@ -24,7 +24,9 @@ namespace Tests
                 new Basket {Id = FoundBasketId}
             };
 
-            _controller =  new BasketController(new InMemoryBasketQuery(baskets), new InMemoryBasketAdder(NewlyCreatedBasketId));
+            _controller =  new BasketController(
+                new InMemoryBasketQuery(baskets),
+                new InMemoryBasketAdder(NewlyCreatedBasketId));
         }
 
         [Test]
