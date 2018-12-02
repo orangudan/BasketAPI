@@ -8,7 +8,7 @@ namespace Tests
     public class BasketControllerTests
     {
         [Test]
-        public void returns_success_when_basket_created()
+        public void result_is_ok_when_basket_created()
         {
             var controller = new BasketController();
             var result = controller.Post();
