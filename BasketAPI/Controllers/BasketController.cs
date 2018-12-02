@@ -9,10 +9,10 @@ namespace BasketAPI.Controllers
     [ApiController]
     public class BasketController : ControllerBase
     {
-        private IEnumerable<Basket> _baskets;
-        private Func<Basket> _basketAdder;
+        private IBasketQuery _baskets;
+        private IBasketAdder _basketAdder;
 
-        public BasketController(IEnumerable<Basket> baskets, Func<Basket> basketAdder)
+        public BasketController(IBasketQuery baskets, IBasketAdder basketAdder)
         {
             _baskets = baskets;
             _basketAdder = basketAdder;
@@ -20,7 +20,7 @@ namespace BasketAPI.Controllers
 
         public ActionResult Get(Guid id)
         {
-            var basket = _baskets.SingleOrDefault(b => b.Id == id);
+            var basket = _baskets.FindById(id);
 
             if (basket == null)
                 return NotFound();
@@ -30,7 +30,7 @@ namespace BasketAPI.Controllers
 
         public ActionResult Post()
         {
-            var newBasket = _basketAdder();
+            var newBasket = _basketAdder.AddBasket();
             return Ok(newBasket);
         }
     }
@@ -38,5 +38,15 @@ namespace BasketAPI.Controllers
     public class Basket
     {
         public Guid Id { get; set; }
+    }
+
+    public interface IBasketQuery
+    {
+        Basket FindById(Guid id);
+    }
+
+    public interface IBasketAdder
+    {
+        Basket AddBasket();
     }
 }
