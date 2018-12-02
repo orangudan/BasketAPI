@@ -17,6 +17,12 @@ namespace BasketAPI.Controllers
             _basketItemAdder = basketItemAdder;
         }
 
+        [HttpGet("{basketId}/{notFoundProductId}")]
+        public ActionResult Get(Guid basketId, Guid notFoundProductId)
+        {
+            return NotFound();
+        }
+
         [HttpPost("{basketId}")]
         public ActionResult Post(Guid basketId, AddBasketItem request)
         {
