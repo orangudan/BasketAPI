@@ -38,14 +38,14 @@ namespace Tests
         }
 
         [Test]
-        public void get_returns_not_found_if_basket_missing()
+        public void Get_returns_not_found_if_basket_missing()
         {
             var result = _controller.Get(MissingBasketId);
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
-        public void get_returns_basket_if_it_exists()
+        public void Get_returns_basket_if_it_exists()
         {
             var result = _controller.Get(FoundBasketId);
             Assert.That(result, Is.TypeOf<OkObjectResult>());
@@ -53,7 +53,7 @@ namespace Tests
         }
 
         [Test]
-        public void get_includes_basket_items_in_response()
+        public void Get_includes_basket_items_in_response()
         {
             var result = _controller.Get(FoundBasketId);
             var basket = (Basket)((OkObjectResult)result).Value;
@@ -61,7 +61,7 @@ namespace Tests
         }
 
         [Test]
-        public void post_returns_basket_that_was_created()
+        public void Post_returns_basket_that_was_created()
         {
             var result = _controller.Post();
             Assert.That(result, Is.TypeOf<OkObjectResult>());
@@ -71,14 +71,14 @@ namespace Tests
         }
 
         [Test]
-        public void delete_returns_not_found_if_basket_missing()
+        public void Delete_returns_not_found_if_basket_missing()
         {
             var result = _controller.Delete(MissingBasketId);
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
-        public void delete_returns_no_content_if_deleted()
+        public void Delete_returns_no_content_if_deleted()
         {
             var result = _controller.Delete(FoundBasketId);
             Assert.That(result, Is.TypeOf<NoContentResult>());

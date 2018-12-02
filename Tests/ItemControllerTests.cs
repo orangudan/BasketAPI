@@ -33,21 +33,21 @@ namespace Tests
         }
 
         [Test]
-        public void get_returns_not_found_if_basket_missing()
+        public void Get_returns_not_found_if_basket_missing()
         {
             var result = _controller.Get(MissingBasketId, FoundItemId);
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
-        public void get_returns_not_found_if_item_not_in_basket()
+        public void Get_returns_not_found_if_item_not_in_basket()
         {
             var result = _controller.Get(FoundBasketId, MissingItemId);
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
-        public void get_returns_item_if_in_basket()
+        public void Get_returns_item_if_in_basket()
         {
             var result = _controller.Get(FoundBasketId, FoundItemId);
             Assert.That(result, Is.TypeOf<OkObjectResult>());
@@ -55,14 +55,14 @@ namespace Tests
         }
 
         [Test]
-        public void post_returns_not_found_if_basket_missing()
+        public void Post_returns_not_found_if_basket_missing()
         {
             var result = _controller.Post(MissingBasketId, new AddItem { ItemId = NewlyAddedItemId, Quantity = 3 });
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
-        public void post_returns_item_that_was_added_to_basket()
+        public void Post_returns_item_that_was_added_to_basket()
         {
             var result = _controller.Post(FoundBasketId, new AddItem { ItemId = NewlyAddedItemId, Quantity = 3 });
             Assert.That(result, Is.TypeOf<OkObjectResult>());
@@ -74,21 +74,21 @@ namespace Tests
         }
 
         [Test]
-        public void update_returns_not_found_if_basket_missing()
+        public void Update_returns_not_found_if_basket_missing()
         {
             var result = _controller.Update(MissingBasketId, FoundItemId, new UpdateItem { Quantity = 5 });
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
-        public void update_returns_not_found_if_item_not_in_basket()
+        public void Update_returns_not_found_if_item_not_in_basket()
         {
             var result = _controller.Update(FoundBasketId, MissingItemId, new UpdateItem { Quantity = 5 });
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
-        public void update_returns_item_that_was_updated()
+        public void Update_returns_item_that_was_updated()
         {
             var result = _controller.Update(FoundBasketId, FoundItemId, new UpdateItem { Quantity = 33 });
             Assert.That(result, Is.TypeOf<OkObjectResult>());
@@ -98,21 +98,21 @@ namespace Tests
         }
 
         [Test]
-        public void delete_returns_not_found_if_basket_missing()
+        public void Delete_returns_not_found_if_basket_missing()
         {
             var result = _controller.Delete(MissingBasketId, FoundItemId);
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
-        public void delete_returns_not_found_if_item_not_in_basket()
+        public void Delete_returns_not_found_if_item_not_in_basket()
         {
             var result = _controller.Delete(FoundBasketId, MissingItemId);
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
-        public void delete_returns_ok_if_deleted()
+        public void Delete_returns_ok_if_deleted()
         {
             var result = _controller.Delete(FoundBasketId, FoundItemId);
             Assert.That(result, Is.TypeOf<OkResult>());
