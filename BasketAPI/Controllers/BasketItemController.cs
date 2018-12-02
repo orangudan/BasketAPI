@@ -26,7 +26,8 @@ namespace BasketAPI.Controllers
             if (basket == null)
                 return NotFound();
 
-            var basketItem = basket.Items.SingleOrDefault(i => i.ProductId == basketItemId);
+            var basketItem = basket.FindItem(basketItemId);
+
             if (basketItem == null)
                 return NotFound();
 
@@ -54,7 +55,7 @@ namespace BasketAPI.Controllers
             if (basket == null)
                 return NotFound();
 
-            var basketItem = basket.Items.SingleOrDefault(i => i.ProductId == basketItemId);
+            var basketItem = basket.FindItem(basketItemId);
             if (basketItem == null)
                 return NotFound();
 
@@ -71,7 +72,7 @@ namespace BasketAPI.Controllers
             if (basket == null)
                 return NotFound();
 
-            var basketItem = basket.Items.SingleOrDefault(i => i.ProductId == basketItemId);
+            var basketItem = basket.FindItem(basketItemId);
             if (basketItem == null)
                 return NotFound();
 
