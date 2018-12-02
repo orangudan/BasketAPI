@@ -1,11 +1,13 @@
 ﻿using BasketAPI.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using BasketAPI.Models;
 
 namespace BasketAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Produces("application/json")]
     public class BasketController : ControllerBase
     {
         private readonly IBasketRepository _basketRepository;
@@ -16,6 +18,8 @@ namespace BasketAPI.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Basket), 200)]
+        [ProducesResponseType(404)]
         public ActionResult Get(Guid id)
         {
             var basket = _basketRepository.FindById(id);
@@ -27,12 +31,15 @@ namespace BasketAPI.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(Basket), 200)]
         public ActionResult Post()
         {
             return Ok(_basketRepository.Add());
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
         public ActionResult Delete(Guid id)
         {
             var basket = _basketRepository.FindById(id);
