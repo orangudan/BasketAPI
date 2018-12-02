@@ -4,7 +4,7 @@ using System;
 
 namespace BasketAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/basket/{basketId}/[controller]")]
     [ApiController]
     public class ItemController : ControllerBase
     {
@@ -15,7 +15,7 @@ namespace BasketAPI.Controllers
             _basketRepository = basketRepository;
         }
 
-        [HttpGet("{basketId}/{itemId}")]
+        [HttpGet("{itemId}")]
         public ActionResult Get(Guid basketId, Guid itemId)
         {
             var basket = _basketRepository.FindById(basketId);
@@ -31,7 +31,7 @@ namespace BasketAPI.Controllers
             return Ok(item);
         }
 
-        [HttpPost("{basketId}")]
+        [HttpPost]
         public ActionResult Post(Guid basketId, AddItem request)
         {
             var basket = _basketRepository.FindById(basketId);
@@ -44,7 +44,7 @@ namespace BasketAPI.Controllers
             return Ok(newItem);
         }
 
-        [HttpPatch("{basketId}/{itemId}")]
+        [HttpPatch("{itemId}")]
         public ActionResult Update(Guid basketId, Guid itemId, UpdateItem updateItem)
         {
             var basket = _basketRepository.FindById(basketId);
@@ -61,7 +61,7 @@ namespace BasketAPI.Controllers
             return Ok(item);
         }
 
-        [HttpDelete("{basketId}/{itemId}")]
+        [HttpDelete("{itemId}")]
         public ActionResult Delete(Guid basketId, Guid itemId)
         {
             var basket = _basketRepository.FindById(basketId);
