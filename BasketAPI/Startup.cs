@@ -17,7 +17,7 @@ using Microsoft.Extensions.Options;
 namespace BasketAPI
 {
 
-    public class InMemoryBaskets : IBasketQuery, IBasketAdder, IBasketItemAdder
+    public class InMemoryBaskets : IBasketQuery, IBasketAdder
     {
         private List<Basket> _baskets = new List<Basket>();
 
@@ -60,7 +60,6 @@ namespace BasketAPI
             services.AddSingleton<InMemoryBaskets>();
             services.AddScoped<IBasketQuery>(s => s.GetService<InMemoryBaskets>());
             services.AddScoped<IBasketAdder>(s => s.GetService<InMemoryBaskets>());
-            services.AddScoped<IBasketItemAdder>(s => s.GetService<InMemoryBaskets>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

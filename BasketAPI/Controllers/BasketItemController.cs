@@ -9,12 +9,10 @@ namespace BasketAPI.Controllers
     public class BasketItemController : ControllerBase
     {
         private IBasketQuery _baskets;
-        private IBasketItemAdder _basketItemAdder;
 
-        public BasketItemController(IBasketQuery baskets, IBasketItemAdder basketItemAdder)
+        public BasketItemController(IBasketQuery baskets)
         {
             _baskets = baskets;
-            _basketItemAdder = basketItemAdder;
         }
 
         [HttpGet("{basketId}/{basketItemId}")]

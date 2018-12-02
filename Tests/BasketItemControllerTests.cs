@@ -37,8 +37,7 @@ namespace Tests
             };
 
             _controller = new BasketItemController(
-                new InMemoryBasketQuery(_baskets),
-                new InMemoryBasketItemAdder());
+                new InMemoryBasketQuery(_baskets));
         }
 
         [Test]
@@ -125,20 +124,6 @@ namespace Tests
         {
             var result = _controller.Delete(FoundBasketId, FoundProductId);
             Assert.That(result, Is.TypeOf<OkResult>());
-        }
-    }
-
-    public class InMemoryBasketItemAdder : IBasketItemAdder
-    {
-        public BasketItem AddBasketItem(Basket basket, Guid productId, int quantity)
-        {
-            var basketItem = new BasketItem
-            {
-                ProductId = productId,
-                Quantity = quantity
-            };
-            basket.Items.Add(basketItem);
-            return basketItem;
         }
     }
 }
