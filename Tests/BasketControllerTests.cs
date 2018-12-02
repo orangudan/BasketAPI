@@ -14,7 +14,7 @@ namespace Tests
     {
         private readonly Guid NewlyCreatedBasketId = Guid.Parse("ab0d1822-06d8-4a63-8761-3f5ac7774671");
         private readonly Guid FoundBasketId = Guid.Parse("f5b8861f-73e6-4624-b37d-8b8b5b93a229");
-        private readonly Guid NotFoundBasketId = Guid.Parse("6c696970-4c89-46bd-9b89-1fc2c27ef71e");
+        private readonly Guid MissingBasketId = Guid.Parse("6c696970-4c89-46bd-9b89-1fc2c27ef71e");
 
         private BasketController _controller;
 
@@ -40,7 +40,7 @@ namespace Tests
         [Test]
         public void get_returns_not_found_if_basket_missing()
         {
-            var result = _controller.Get(NotFoundBasketId);
+            var result = _controller.Get(MissingBasketId);
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
@@ -61,14 +61,7 @@ namespace Tests
         }
 
         [Test]
-        public void post_returns_ok()
-        {
-            var result = _controller.Post();
-            Assert.That(result, Is.TypeOf<OkObjectResult>());
-        }
-
-        [Test]
-        public void post_returns_newly_created_basket()
+        public void post_returns_basket_that_was_created()
         {
             var result = _controller.Post();
             Assert.That(result, Is.TypeOf<OkObjectResult>());

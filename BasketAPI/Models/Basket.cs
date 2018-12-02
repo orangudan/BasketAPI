@@ -1,5 +1,4 @@
-﻿using BasketAPI.Models;
-using System;
+﻿using System;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -10,14 +9,14 @@ namespace BasketAPI.Models
         public Guid Id { get; set; }
         public List<Item> Items { get; set; } = new List<Item>();
 
-        public Item FindItem(Guid basketItemId)
+        public Item FindItem(Guid itemId)
         {
-            return Items.SingleOrDefault(item => item.ProductId == basketItemId);
+            return Items.SingleOrDefault(item => item.ItemId == itemId);
         }
 
-        public Item AddItem(Guid productId, int quantity)
+        public Item AddItem(Guid itemId, int quantity)
         {
-            var item = new Item { ProductId = productId, Quantity = quantity };
+            var item = new Item { ItemId = itemId, Quantity = quantity };
             Items.Add(item);
             return item;
         }

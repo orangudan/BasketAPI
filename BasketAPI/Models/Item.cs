@@ -4,7 +4,7 @@ namespace BasketAPI.Models
 {
     public class Item
     {
-        public Guid ProductId { get; set; }
+        public Guid ItemId { get; set; }
         public int Quantity { get; set; }
     }
 }
