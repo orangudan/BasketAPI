@@ -16,6 +16,7 @@ namespace BasketAPI.Controllers
             _basketAdder = basketAdder;
         }
 
+        [HttpGet("{id}")]
         public ActionResult Get(Guid id)
         {
             var basket = _baskets.FindById(id);
@@ -26,6 +27,7 @@ namespace BasketAPI.Controllers
             return Ok(basket);
         }
 
+        [HttpPost]
         public ActionResult Post()
         {
             var newBasket = _basketAdder.AddBasket();
