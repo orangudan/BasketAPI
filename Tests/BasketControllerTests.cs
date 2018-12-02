@@ -26,9 +26,9 @@ namespace Tests
                 new Basket
                 {
                     Id = FoundBasketId,
-                    Items = new List<BasketItem>
+                    Items = new List<Item>
                     {
-                        new BasketItem()
+                        new Item()
                     }
                 }
             };

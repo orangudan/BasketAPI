@@ -8,16 +8,16 @@ namespace BasketAPI.Models
     public class Basket
     {
         public Guid Id { get; set; }
-        public List<BasketItem> Items { get; set; } = new List<BasketItem>();
+        public List<Item> Items { get; set; } = new List<Item>();
 
-        public BasketItem FindItem(Guid basketItemId)
+        public Item FindItem(Guid basketItemId)
         {
             return Items.SingleOrDefault(item => item.ProductId == basketItemId);
         }
 
-        public BasketItem AddItem(Guid productId, int quantity)
+        public Item AddItem(Guid productId, int quantity)
         {
-            var item = new BasketItem { ProductId = productId, Quantity = quantity };
+            var item = new Item { ProductId = productId, Quantity = quantity };
             Items.Add(item);
             return item;
         }

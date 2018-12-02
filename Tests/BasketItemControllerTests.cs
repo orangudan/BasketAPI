@@ -53,7 +53,7 @@ namespace Tests
         {
             var result = _controller.Get(FoundBasketId, FoundProductId);
             Assert.That(result, Is.TypeOf<OkObjectResult>());
-            Assert.That(((OkObjectResult)result).Value, Is.TypeOf<BasketItem>());
+            Assert.That(((OkObjectResult)result).Value, Is.TypeOf<Item>());
         }
 
         [Test]
@@ -68,9 +68,9 @@ namespace Tests
         {
             var result = _controller.Post(FoundBasketId, new AddBasketItem { ProductId = NewlyAddedProductId, Quantity = 3 });
             Assert.That(result, Is.TypeOf<OkObjectResult>());
-            Assert.That(((OkObjectResult)result).Value, Is.TypeOf<BasketItem>());
+            Assert.That(((OkObjectResult)result).Value, Is.TypeOf<Item>());
 
-            var basketItem = (BasketItem)((OkObjectResult)result).Value;
+            var basketItem = (Item)((OkObjectResult)result).Value;
             Assert.That(basketItem.ProductId, Is.EqualTo(NewlyAddedProductId));
             Assert.That(basketItem.Quantity, Is.EqualTo(3));
         }
@@ -94,8 +94,8 @@ namespace Tests
         {
             var result = _controller.Update(FoundBasketId, FoundProductId, new UpdateBasketItem { Quantity = 33 });
             Assert.That(result, Is.TypeOf<OkObjectResult>());
-            Assert.That(((OkObjectResult)result).Value, Is.TypeOf<BasketItem>());
-            var basketItem = (BasketItem)((OkObjectResult)result).Value;
+            Assert.That(((OkObjectResult)result).Value, Is.TypeOf<Item>());
+            var basketItem = (Item)((OkObjectResult)result).Value;
             Assert.That(basketItem.Quantity, Is.EqualTo(33));
         }
 
