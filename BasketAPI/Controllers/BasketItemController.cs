@@ -9,10 +9,10 @@ namespace BasketAPI.Controllers
     [ApiController]
     public class BasketItemController : ControllerBase
     {
-        private IEnumerable<Basket> _baskets;
+        private IBasketQuery _baskets;
         private Func<BasketItem> _basketItemAdder;
 
-        public BasketItemController(IEnumerable<Basket> baskets, Func<BasketItem> basketItemAdder)
+        public BasketItemController(IBasketQuery baskets, Func<BasketItem> basketItemAdder)
         {
             _baskets = baskets;
             _basketItemAdder = basketItemAdder;
@@ -21,7 +21,7 @@ namespace BasketAPI.Controllers
         [HttpPost("{basketId}")]
         public ActionResult Post(Guid basketId)
         {
-            var basket = _baskets.SingleOrDefault(b => b.Id == basketId);
+            var basket = _baskets.FindById(basketId);
 
             if (basket == null)
                 return NotFound();
