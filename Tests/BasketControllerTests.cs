@@ -23,6 +23,20 @@ namespace Tests
         }
 
         [Test]
+        public void get_returns_basket_if_basket_exists()
+        {
+            var baskets = new List<Basket>
+            {
+                new Basket {Id = Guid.Parse(FoundBasketId)}
+            };
+
+            var controller = new BasketController(baskets, _basketAdder);
+            var result = controller.Get(Guid.Parse(FoundBasketId));
+            Assert.That(result, Is.TypeOf<OkObjectResult>());
+            Assert.That(((OkObjectResult)result).Value, Is.TypeOf<Basket>());
+        }
+
+        [Test]
         public void result_is_ok_when_basket_created()
         {
             var controller = new BasketController(new List<Basket>(), _basketAdder);

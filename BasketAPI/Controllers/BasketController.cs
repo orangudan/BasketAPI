@@ -25,7 +25,7 @@ namespace BasketAPI.Controllers
             if (basket == null)
                 return NotFound();
 
-            return Ok();
+            return Ok(basket);
         }
 
         public ActionResult Post()
