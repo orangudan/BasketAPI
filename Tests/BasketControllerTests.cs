@@ -69,5 +69,19 @@ namespace Tests
             var basket = (Basket)((OkObjectResult)result).Value;
             Assert.That(basket.Id, Is.EqualTo(NewlyCreatedBasketId));
         }
+
+        [Test]
+        public void delete_returns_not_found_if_basket_missing()
+        {
+            var result = _controller.Delete(MissingBasketId);
+            Assert.That(result, Is.TypeOf<NotFoundResult>());
+        }
+
+        [Test]
+        public void delete_returns_no_content_if_deleted()
+        {
+            var result = _controller.Delete(FoundBasketId);
+            Assert.That(result, Is.TypeOf<NoContentResult>());
+        }
     }
 }

@@ -31,5 +31,18 @@ namespace BasketAPI.Controllers
         {
             return Ok(_basketRepository.Add());
         }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(Guid id)
+        {
+            var basket = _basketRepository.FindById(id);
+
+            if (basket == null)
+                return NotFound();
+
+            _basketRepository.Remove(basket);
+
+            return NoContent();
+        }
     }
 }
