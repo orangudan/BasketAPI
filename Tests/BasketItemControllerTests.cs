@@ -23,8 +23,7 @@ namespace Tests
                 new Basket { Id = FoundBasketId }
             };
 
-            Func<BasketItem> basketItemAdder = () => new BasketItem { Id = NewBasketItemId };
-            _controller = new BasketItemController(new InMemoryBasketQuery(_baskets), basketItemAdder);
+            _controller = new BasketItemController(new InMemoryBasketQuery(_baskets), new InMemoryBasketItemAdder(NewBasketItemId));
         }
 
         [Test]
@@ -48,6 +47,24 @@ namespace Tests
             var result = _controller.Post(FoundBasketId);
             var basketItem = (BasketItem)((OkObjectResult)result).Value;
             Assert.That(basketItem.Id, Is.EqualTo(NewBasketItemId));
+        }
+    }
+
+    public class InMemoryBasketItemAdder : IBasketItemAdder
+    {
+        private Guid _generatedId;
+
+        public InMemoryBasketItemAdder(Guid generatedId)
+        {
+            _generatedId = generatedId;
+        }
+
+        public BasketItem AddBasketItem()
+        {
+            return new BasketItem
+            {
+                Id = _generatedId
+            };
         }
     }
 }

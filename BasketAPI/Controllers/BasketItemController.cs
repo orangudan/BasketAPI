@@ -10,9 +10,9 @@ namespace BasketAPI.Controllers
     public class BasketItemController : ControllerBase
     {
         private IBasketQuery _baskets;
-        private Func<BasketItem> _basketItemAdder;
+        private IBasketItemAdder _basketItemAdder;
 
-        public BasketItemController(IBasketQuery baskets, Func<BasketItem> basketItemAdder)
+        public BasketItemController(IBasketQuery baskets, IBasketItemAdder basketItemAdder)
         {
             _baskets = baskets;
             _basketItemAdder = basketItemAdder;
@@ -26,7 +26,7 @@ namespace BasketAPI.Controllers
             if (basket == null)
                 return NotFound();
 
-            var newBasketItem = _basketItemAdder();
+            var newBasketItem = _basketItemAdder.AddBasketItem();
 
             return Ok(newBasketItem);
         }
@@ -35,5 +35,10 @@ namespace BasketAPI.Controllers
     public class BasketItem
     {
         public Guid Id { get; set; }
+    }
+
+    public interface IBasketItemAdder
+    {
+        BasketItem AddBasketItem();
     }
 }
