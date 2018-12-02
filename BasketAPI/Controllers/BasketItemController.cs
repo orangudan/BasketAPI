@@ -1,4 +1,5 @@
 ﻿using System;
+using BasketAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BasketAPI.Controllers
@@ -31,11 +32,6 @@ namespace BasketAPI.Controllers
     }
 
     public class AddBasketItem
-    {
-        public Guid ProductId { get; set; }
-    }
-
-    public class BasketItem
     {
         public Guid ProductId { get; set; }
     }

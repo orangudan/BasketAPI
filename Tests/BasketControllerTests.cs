@@ -4,6 +4,7 @@ using NUnit.Framework;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using BasketAPI.Models;
 
 namespace Tests
 {
