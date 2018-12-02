@@ -8,7 +8,12 @@ namespace BasketAPI.Controllers
     {
         public ActionResult Post()
         {
-            return Ok();
+            return Ok(new Basket());
         }
+    }
+
+    public class Basket
+    {
+
     }
 }
