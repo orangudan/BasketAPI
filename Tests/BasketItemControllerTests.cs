@@ -43,7 +43,7 @@ namespace Tests
         [Test]
         public void get_returns_not_found_if_basket_missing()
         {
-            var result = _controller.Get(NotFoundBasketId, FoundBasketId);
+            var result = _controller.Get(NotFoundBasketId, FoundProductId);
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
