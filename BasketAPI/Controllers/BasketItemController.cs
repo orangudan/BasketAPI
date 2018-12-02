@@ -42,7 +42,7 @@ namespace BasketAPI.Controllers
             if (basket == null)
                 return NotFound();
 
-            var newBasketItem = _basketItemAdder.AddBasketItem(basket, request.ProductId, request.Quantity);
+            var newBasketItem = basket.AddItem(request.ProductId, request.Quantity);
 
             return Ok(newBasketItem);
         }

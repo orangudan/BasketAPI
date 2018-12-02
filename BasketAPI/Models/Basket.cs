@@ -14,5 +14,12 @@ namespace BasketAPI.Models
         {
             return Items.SingleOrDefault(item => item.ProductId == basketItemId);
         }
+
+        public BasketItem AddItem(Guid productId, int quantity)
+        {
+            var item = new BasketItem { ProductId = productId, Quantity = quantity };
+            Items.Add(item);
+            return item;
+        }
     }
 }
