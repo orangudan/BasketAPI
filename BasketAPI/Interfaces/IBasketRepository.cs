@@ -1,5 +1,5 @@
-﻿using System;
-using BasketAPI.Models;
+﻿using BasketAPI.Models;
+using System;
 
 namespace BasketAPI.Interfaces
 {

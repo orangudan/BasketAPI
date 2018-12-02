@@ -1,8 +1,8 @@
-﻿using System;
+﻿using BasketAPI.Interfaces;
+using BasketAPI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using BasketAPI.Interfaces;
-using BasketAPI.Models;
 
 namespace Tests.Shared
 {
@@ -15,7 +15,6 @@ namespace Tests.Shared
         {
             _generatedId = generatedId;
             _baskets = baskets;
-
         }
 
         public Basket FindById(Guid basketId)
@@ -25,7 +24,7 @@ namespace Tests.Shared
 
         public Basket Add()
         {
-            var basket = new Basket { Id = _generatedId };
+            var basket = new Basket {Id = _generatedId};
             _baskets.Add(basket);
             return basket;
         }

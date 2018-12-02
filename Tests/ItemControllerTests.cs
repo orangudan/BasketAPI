@@ -1,10 +1,8 @@
 ﻿using BasketAPI.Controllers;
-using BasketAPI.Interfaces;
 using BasketAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using Tests.Shared;
 
@@ -51,24 +49,24 @@ namespace Tests
         {
             var result = _controller.Get(FoundBasketId, FoundItemId);
             Assert.That(result, Is.TypeOf<OkObjectResult>());
-            Assert.That(((OkObjectResult)result).Value, Is.TypeOf<Item>());
+            Assert.That(((OkObjectResult) result).Value, Is.TypeOf<Item>());
         }
 
         [Test]
         public void Post_returns_not_found_if_basket_missing()
         {
-            var result = _controller.Post(MissingBasketId, new AddItem { ItemId = NewlyAddedItemId, Quantity = 3 });
+            var result = _controller.Post(MissingBasketId, new AddItem {ItemId = NewlyAddedItemId, Quantity = 3});
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
         public void Post_returns_item_that_was_added_to_basket()
         {
-            var result = _controller.Post(FoundBasketId, new AddItem { ItemId = NewlyAddedItemId, Quantity = 3 });
+            var result = _controller.Post(FoundBasketId, new AddItem {ItemId = NewlyAddedItemId, Quantity = 3});
             Assert.That(result, Is.TypeOf<OkObjectResult>());
-            Assert.That(((OkObjectResult)result).Value, Is.TypeOf<Item>());
+            Assert.That(((OkObjectResult) result).Value, Is.TypeOf<Item>());
 
-            var item = (Item)((OkObjectResult)result).Value;
+            var item = (Item) ((OkObjectResult) result).Value;
             Assert.That(item.ItemId, Is.EqualTo(NewlyAddedItemId));
             Assert.That(item.Quantity, Is.EqualTo(3));
         }
@@ -76,24 +74,24 @@ namespace Tests
         [Test]
         public void Update_returns_not_found_if_basket_missing()
         {
-            var result = _controller.Update(MissingBasketId, FoundItemId, new UpdateItem { Quantity = 5 });
+            var result = _controller.Update(MissingBasketId, FoundItemId, new UpdateItem {Quantity = 5});
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
         public void Update_returns_not_found_if_item_not_in_basket()
         {
-            var result = _controller.Update(FoundBasketId, MissingItemId, new UpdateItem { Quantity = 5 });
+            var result = _controller.Update(FoundBasketId, MissingItemId, new UpdateItem {Quantity = 5});
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
         public void Update_returns_item_that_was_updated()
         {
-            var result = _controller.Update(FoundBasketId, FoundItemId, new UpdateItem { Quantity = 33 });
+            var result = _controller.Update(FoundBasketId, FoundItemId, new UpdateItem {Quantity = 33});
             Assert.That(result, Is.TypeOf<OkObjectResult>());
-            Assert.That(((OkObjectResult)result).Value, Is.TypeOf<Item>());
-            var item = (Item)((OkObjectResult)result).Value;
+            Assert.That(((OkObjectResult) result).Value, Is.TypeOf<Item>());
+            var item = (Item) ((OkObjectResult) result).Value;
             Assert.That(item.Quantity, Is.EqualTo(33));
         }
 

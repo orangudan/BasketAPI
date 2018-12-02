@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BasketAPI.Controllers;
-using BasketAPI.Interfaces;
+﻿using BasketAPI.Interfaces;
 using BasketAPI.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BasketAPI
 {
-
     public class InMemoryBaskets : IBasketRepository
     {
         private readonly List<Basket> _baskets = new List<Basket>();
@@ -29,7 +23,7 @@ namespace BasketAPI
 
         public Basket Add()
         {
-            var basket = new Basket { Id = Guid.NewGuid() };
+            var basket = new Basket {Id = Guid.NewGuid()};
             _baskets.Add(basket);
             return basket;
         }
@@ -55,10 +49,7 @@ namespace BasketAPI
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<InMemoryBaskets>();
             services.AddScoped<IBasketRepository>(s => s.GetService<InMemoryBaskets>());
-            services.AddSwaggerGen(c =>
-                {
-                    c.SwaggerDoc("v1", new Info() {Title = "BasketAPI", Version = "v1"});
-                });
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info() {Title = "BasketAPI", Version = "v1"}); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,10 +65,7 @@ namespace BasketAPI
             }
 
             app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BasketAPI v1");
-            });
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "BasketAPI v1"); });
 
             app.UseHttpsRedirection();
             app.UseMvc();

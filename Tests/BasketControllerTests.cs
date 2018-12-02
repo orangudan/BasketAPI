@@ -1,10 +1,10 @@
 ﻿using BasketAPI.Controllers;
+using BasketAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using BasketAPI.Models;
+using System.Linq;
 using Tests.Shared;
 
 namespace Tests
@@ -49,14 +49,14 @@ namespace Tests
         {
             var result = _controller.Get(FoundBasketId);
             Assert.That(result, Is.TypeOf<OkObjectResult>());
-            Assert.That(((OkObjectResult)result).Value, Is.TypeOf<Basket>());
+            Assert.That(((OkObjectResult) result).Value, Is.TypeOf<Basket>());
         }
 
         [Test]
         public void Get_includes_basket_items_in_response()
         {
             var result = _controller.Get(FoundBasketId);
-            var basket = (Basket)((OkObjectResult)result).Value;
+            var basket = (Basket) ((OkObjectResult) result).Value;
             Assert.That(basket.Items.Any(), Is.True);
         }
 
@@ -65,8 +65,8 @@ namespace Tests
         {
             var result = _controller.Post();
             Assert.That(result, Is.TypeOf<OkObjectResult>());
-            Assert.That(((OkObjectResult)result).Value, Is.TypeOf<Basket>());
-            var basket = (Basket)((OkObjectResult)result).Value;
+            Assert.That(((OkObjectResult) result).Value, Is.TypeOf<Basket>());
+            var basket = (Basket) ((OkObjectResult) result).Value;
             Assert.That(basket.Id, Is.EqualTo(NewlyCreatedBasketId));
         }
 

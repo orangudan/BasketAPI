@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BasketAPI.Models
 {
@@ -16,7 +16,7 @@ namespace BasketAPI.Models
 
         public Item AddItem(Guid itemId, int quantity)
         {
-            var item = new Item { ItemId = itemId, Quantity = quantity };
+            var item = new Item {ItemId = itemId, Quantity = quantity};
             Items.Add(item);
             return item;
         }
