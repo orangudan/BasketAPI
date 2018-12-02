@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace BasketAPI.Controllers
 {
@@ -7,11 +9,23 @@ namespace BasketAPI.Controllers
     [ApiController]
     public class BasketController : ControllerBase
     {
+        private IEnumerable<Basket> _baskets;
         private Func<Basket> _basketAdder;
 
-        public BasketController(Func<Basket> basketAdder)
+        public BasketController(IEnumerable<Basket> baskets, Func<Basket> basketAdder)
         {
+            _baskets = baskets;
             _basketAdder = basketAdder;
+        }
+
+        public ActionResult Get(Guid id)
+        {
+            var basket = _baskets.SingleOrDefault(b => b.Id == id);
+
+            if (basket == null)
+                return NotFound();
+
+            return Ok();
         }
 
         public ActionResult Post()
