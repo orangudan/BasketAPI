@@ -41,14 +41,21 @@ namespace Tests
         }
 
         [Test]
-        public void get_returns_not_found_if_basket_item_is_missing()
+        public void get_returns_not_found_if_basket_missing()
+        {
+            var result = _controller.Get(NotFoundBasketId, FoundBasketId);
+            Assert.That(result, Is.TypeOf<NotFoundResult>());
+        }
+
+        [Test]
+        public void get_returns_not_found_if_basket_item_missing()
         {
             var result = _controller.Get(FoundBasketId, NotFoundProductId);
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
-        public void get_returns_basket_item_if_basket_item_exists()
+        public void get_returns_basket_item_if_it_exists()
         {
             var result = _controller.Get(FoundBasketId, FoundProductId);
             Assert.That(result, Is.TypeOf<OkObjectResult>());
@@ -56,33 +63,21 @@ namespace Tests
         }
 
         [Test]
-        public void result_is_not_found_when_basket_doesnt_exist()
+        public void post_returns_not_found_if_basket_missing()
         {
-            var result = _controller.Post(NotFoundBasketId, new AddBasketItem { ProductId = NewlyAddedProductId });
+            var result = _controller.Post(NotFoundBasketId, new AddBasketItem { ProductId = NewlyAddedProductId, Quantity = 3 });
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
-        public void result_contains_newly_created_basket_item()
-        {
-            var result = _controller.Post(FoundBasketId, new AddBasketItem { ProductId = NewlyAddedProductId });
-            Assert.That(result, Is.TypeOf<OkObjectResult>());
-            Assert.That(((OkObjectResult)result).Value, Is.TypeOf<BasketItem>());
-        }
-
-        [Test]
-        public void result_contains_product_id()
-        {
-            var result = _controller.Post(FoundBasketId, new AddBasketItem { ProductId = NewlyAddedProductId });
-            var basketItem = (BasketItem)((OkObjectResult)result).Value;
-            Assert.That(basketItem.ProductId, Is.EqualTo(NewlyAddedProductId));
-        }
-
-        [Test]
-        public void result_contains_quantity()
+        public void post_returns_newly_created_basket_item_if_basket_exists()
         {
             var result = _controller.Post(FoundBasketId, new AddBasketItem { ProductId = NewlyAddedProductId, Quantity = 3 });
+            Assert.That(result, Is.TypeOf<OkObjectResult>());
+            Assert.That(((OkObjectResult)result).Value, Is.TypeOf<BasketItem>());
+
             var basketItem = (BasketItem)((OkObjectResult)result).Value;
+            Assert.That(basketItem.ProductId, Is.EqualTo(NewlyAddedProductId));
             Assert.That(basketItem.Quantity, Is.EqualTo(3));
         }
     }
