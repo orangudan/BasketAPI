@@ -1,7 +1,6 @@
-﻿using System;
-using System.Linq;
-using BasketAPI.Interfaces;
+﻿using BasketAPI.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace BasketAPI.Controllers
 {
