@@ -105,6 +105,27 @@ namespace Tests
             var basketItem = (BasketItem)((OkObjectResult)result).Value;
             Assert.That(basketItem.Quantity, Is.EqualTo(33));
         }
+
+        [Test]
+        public void delete_returns_not_found_if_basket_missing()
+        {
+            var result = _controller.Delete(NotFoundBasketId, FoundProductId);
+            Assert.That(result, Is.TypeOf<NotFoundResult>());
+        }
+
+        [Test]
+        public void delete_returns_not_found_if_basket_item_missing()
+        {
+            var result = _controller.Delete(FoundBasketId, NotFoundProductId);
+            Assert.That(result, Is.TypeOf<NotFoundResult>());
+        }
+
+        [Test]
+        public void delete_returns_ok_if_basket_item_exists()
+        {
+            var result = _controller.Delete(FoundBasketId, FoundProductId);
+            Assert.That(result, Is.TypeOf<OkResult>());
+        }
     }
 
     public class InMemoryBasketItemAdder : IBasketItemAdder

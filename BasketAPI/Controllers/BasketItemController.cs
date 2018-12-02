@@ -62,6 +62,23 @@ namespace BasketAPI.Controllers
 
             return Ok(basketItem);
         }
+
+        [HttpDelete("{basketId}/{basketItemId}")]
+        public ActionResult Delete(Guid basketId, Guid basketItemId)
+        {
+            var basket = _baskets.FindById(basketId);
+
+            if (basket == null)
+                return NotFound();
+
+            var basketItem = basket.Items.SingleOrDefault(i => i.ProductId == basketItemId);
+            if (basketItem == null)
+                return NotFound();
+
+            basket.Items.Remove(basketItem);
+
+            return Ok();
+        }
     }
 
     public class AddBasketItem
