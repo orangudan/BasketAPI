@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using BasketAPI.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,10 +18,19 @@ namespace BasketAPI.Controllers
             _basketItemAdder = basketItemAdder;
         }
 
-        [HttpGet("{basketId}/{notFoundProductId}")]
-        public ActionResult Get(Guid basketId, Guid notFoundProductId)
+        [HttpGet("{basketId}/{basketItemId}")]
+        public ActionResult Get(Guid basketId, Guid basketItemId)
         {
-            return NotFound();
+            var basket = _baskets.FindById(basketId);
+
+            if (basket == null)
+                return NotFound();
+
+            var basketItem = basket.Items.SingleOrDefault(i => i.ProductId == basketItemId);
+            if (basketItem == null)
+                return NotFound();
+
+            return Ok(basketItem);
         }
 
         [HttpPost("{basketId}")]

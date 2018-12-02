@@ -48,6 +48,14 @@ namespace Tests
         }
 
         [Test]
+        public void get_returns_basket_item_if_basket_item_exists()
+        {
+            var result = _controller.Get(FoundBasketId, FoundProductId);
+            Assert.That(result, Is.TypeOf<OkObjectResult>());
+            Assert.That(((OkObjectResult)result).Value, Is.TypeOf<BasketItem>());
+        }
+
+        [Test]
         public void result_is_not_found_when_basket_doesnt_exist()
         {
             var result = _controller.Post(NotFoundBasketId, new AddBasketItem { ProductId = NewlyAddedProductId });
