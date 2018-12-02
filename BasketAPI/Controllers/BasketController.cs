@@ -8,19 +8,17 @@ namespace BasketAPI.Controllers
     [ApiController]
     public class BasketController : ControllerBase
     {
-        private readonly IBasketQuery _baskets;
         private readonly IBasketRepository _basketRepository;
 
-        public BasketController(IBasketQuery baskets, IBasketRepository basketRepository)
+        public BasketController(IBasketRepository basketRepository)
         {
-            _baskets = baskets;
             _basketRepository = basketRepository;
         }
 
         [HttpGet("{id}")]
         public ActionResult Get(Guid id)
         {
-            var basket = _baskets.FindById(id);
+            var basket = _basketRepository.FindById(id);
 
             if (basket == null)
                 return NotFound();

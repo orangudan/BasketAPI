@@ -34,8 +34,7 @@ namespace Tests
             };
 
             _controller = new BasketController(
-                new InMemoryBasketQuery(baskets),
-                new InMemoryBasketAdder(NewlyCreatedBasketId));
+                new InMemoryBasketRepository(NewlyCreatedBasketId, baskets));
         }
 
         [Test]
@@ -79,14 +78,21 @@ namespace Tests
         }
     }
 
-    public class InMemoryBasketAdder : IBasketRepository
+    public class InMemoryBasketRepository : IBasketRepository
     {
-        private Guid _generatedId;
-        private List<Basket> _baskets = new List<Basket>();
+        private readonly Guid _generatedId;
+        private readonly List<Basket> _baskets;
 
-        public InMemoryBasketAdder(Guid generatedId)
+        public InMemoryBasketRepository(Guid generatedId, List<Basket> baskets)
         {
             _generatedId = generatedId;
+            _baskets = baskets;
+
+        }
+
+        public Basket FindById(Guid basketId)
+        {
+            return _baskets.SingleOrDefault(b => b.Id == basketId);
         }
 
         public Basket Add()
@@ -99,26 +105,6 @@ namespace Tests
         public void Remove(Basket basket)
         {
             _baskets.Remove(basket);
-        }
-    }
-
-    public class InMemoryBasketQuery : IBasketQuery
-    {
-        private IEnumerable<Basket> _baskets;
-
-        public InMemoryBasketQuery()
-        {
-            _baskets = new List<Basket>();
-        }
-
-        public InMemoryBasketQuery(IEnumerable<Basket> baskets)
-        {
-            _baskets = baskets;
-        }
-
-        public Basket FindById(Guid id)
-        {
-            return _baskets.SingleOrDefault(b => b.Id == id);
         }
     }
 }

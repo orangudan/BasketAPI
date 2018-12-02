@@ -24,7 +24,7 @@ namespace Tests
         [SetUp]
         public void Set_up_controller()
         {
-            var _baskets = new List<Basket>
+            var baskets = new List<Basket>
             {
                 new Basket
                 {
@@ -37,7 +37,7 @@ namespace Tests
             };
 
             _controller = new BasketItemController(
-                new InMemoryBasketQuery(_baskets));
+                new InMemoryBasketRepository(Guid.NewGuid(), baskets));
         }
 
         [Test]

@@ -17,27 +17,20 @@ using Microsoft.Extensions.Options;
 namespace BasketAPI
 {
 
-    public class InMemoryBaskets : IBasketQuery, IBasketRepository
+    public class InMemoryBaskets : IBasketRepository
     {
-        private List<Basket> _baskets = new List<Basket>();
+        private readonly List<Basket> _baskets = new List<Basket>();
+
+        public Basket FindById(Guid id)
+        {
+            return _baskets.SingleOrDefault(b => b.Id == id);
+        }
 
         public Basket Add()
         {
             var basket = new Basket { Id = Guid.NewGuid() };
             _baskets.Add(basket);
             return basket;
-        }
-
-        public BasketItem AddBasketItem(Basket basket, Guid productId, int quantity)
-        {
-            var basketItem = new BasketItem { ProductId = productId, Quantity = quantity };
-            basket.Items.Add(basketItem);
-            return basketItem;
-        }
-
-        public Basket FindById(Guid id)
-        {
-            return _baskets.SingleOrDefault(b => b.Id == id);
         }
 
         public void Remove(Basket basket)
@@ -60,7 +53,6 @@ namespace BasketAPI
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<InMemoryBaskets>();
-            services.AddScoped<IBasketQuery>(s => s.GetService<InMemoryBaskets>());
             services.AddScoped<IBasketRepository>(s => s.GetService<InMemoryBaskets>());
         }
 

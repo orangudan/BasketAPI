@@ -8,17 +8,17 @@ namespace BasketAPI.Controllers
     [ApiController]
     public class BasketItemController : ControllerBase
     {
-        private readonly IBasketQuery _baskets;
+        private readonly IBasketRepository _basketRepository;
 
-        public BasketItemController(IBasketQuery baskets)
+        public BasketItemController(IBasketRepository basketRepository)
         {
-            _baskets = baskets;
+            _basketRepository = basketRepository;
         }
 
         [HttpGet("{basketId}/{basketItemId}")]
         public ActionResult Get(Guid basketId, Guid basketItemId)
         {
-            var basket = _baskets.FindById(basketId);
+            var basket = _basketRepository.FindById(basketId);
 
             if (basket == null)
                 return NotFound();
@@ -34,7 +34,7 @@ namespace BasketAPI.Controllers
         [HttpPost("{basketId}")]
         public ActionResult Post(Guid basketId, AddBasketItem request)
         {
-            var basket = _baskets.FindById(basketId);
+            var basket = _basketRepository.FindById(basketId);
 
             if (basket == null)
                 return NotFound();
@@ -47,7 +47,7 @@ namespace BasketAPI.Controllers
         [HttpPatch("{basketId}/{basketItemId}")]
         public ActionResult Update(Guid basketId, Guid basketItemId, UpdateBasketItem updateBasketItem)
         {
-            var basket = _baskets.FindById(basketId);
+            var basket = _basketRepository.FindById(basketId);
 
             if (basket == null)
                 return NotFound();
@@ -64,7 +64,7 @@ namespace BasketAPI.Controllers
         [HttpDelete("{basketId}/{basketItemId}")]
         public ActionResult Delete(Guid basketId, Guid basketItemId)
         {
-            var basket = _baskets.FindById(basketId);
+            var basket = _basketRepository.FindById(basketId);
 
             if (basket == null)
                 return NotFound();
