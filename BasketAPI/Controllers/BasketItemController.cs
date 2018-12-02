@@ -1,5 +1,5 @@
 ﻿using System;
-using BasketAPI.Models;
+using BasketAPI.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BasketAPI.Controllers
@@ -34,10 +34,5 @@ namespace BasketAPI.Controllers
     public class AddBasketItem
     {
         public Guid ProductId { get; set; }
-    }
-
-    public interface IBasketItemAdder
-    {
-        BasketItem AddBasketItem(Basket basket, Guid productId);
     }
 }

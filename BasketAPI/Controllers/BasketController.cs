@@ -1,4 +1,4 @@
-﻿using BasketAPI.Models;
+﻿using BasketAPI.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -34,15 +34,5 @@ namespace BasketAPI.Controllers
             var newBasket = _basketAdder.AddBasket();
             return Ok(newBasket);
         }
-    }
-
-    public interface IBasketQuery
-    {
-        Basket FindById(Guid id);
-    }
-
-    public interface IBasketAdder
-    {
-        Basket AddBasket();
     }
 }
