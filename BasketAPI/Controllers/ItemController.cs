@@ -1,11 +1,13 @@
 ﻿using BasketAPI.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using BasketAPI.Models;
 
 namespace BasketAPI.Controllers
 {
     [Route("api/basket/{basketId}/[controller]")]
     [ApiController]
+    [Produces("application/json")]
     public class ItemController : ControllerBase
     {
         private readonly IBasketRepository _basketRepository;
@@ -16,6 +18,8 @@ namespace BasketAPI.Controllers
         }
 
         [HttpGet("{itemId}")]
+        [ProducesResponseType(typeof(Item), 200)]
+        [ProducesResponseType(404)]
         public ActionResult Get(Guid basketId, Guid itemId)
         {
             var basket = _basketRepository.FindById(basketId);
@@ -32,6 +36,8 @@ namespace BasketAPI.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(Item), 200)]
+        [ProducesResponseType(404)]
         public ActionResult Post(Guid basketId, AddItem request)
         {
             var basket = _basketRepository.FindById(basketId);
@@ -45,6 +51,8 @@ namespace BasketAPI.Controllers
         }
 
         [HttpPatch("{itemId}")]
+        [ProducesResponseType(typeof(Item), 200)]
+        [ProducesResponseType(404)]
         public ActionResult Update(Guid basketId, Guid itemId, UpdateItem updateItem)
         {
             var basket = _basketRepository.FindById(basketId);
@@ -62,6 +70,8 @@ namespace BasketAPI.Controllers
         }
 
         [HttpDelete("{itemId}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public ActionResult Delete(Guid basketId, Guid itemId)
         {
             var basket = _basketRepository.FindById(basketId);
