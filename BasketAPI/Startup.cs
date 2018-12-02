@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace BasketAPI
 {
@@ -54,6 +55,10 @@ namespace BasketAPI
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<InMemoryBaskets>();
             services.AddScoped<IBasketRepository>(s => s.GetService<InMemoryBaskets>());
+            services.AddSwaggerGen(c =>
+                {
+                    c.SwaggerDoc("v1", new Info() {Title = "BasketAPI", Version = "v1"});
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,6 +72,13 @@ namespace BasketAPI
             {
                 app.UseHsts();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "BasketAPI v1");
+                c.RoutePrefix = string.Empty;
+            });
 
             app.UseHttpsRedirection();
             app.UseMvc();
