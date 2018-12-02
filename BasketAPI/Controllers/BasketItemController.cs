@@ -24,7 +24,12 @@ namespace BasketAPI.Controllers
             if (basket == null)
                 return NotFound();
 
-            return Ok();
+            return Ok(new BasketItem());
         }
+    }
+
+    public class BasketItem
+    {
+
     }
 }

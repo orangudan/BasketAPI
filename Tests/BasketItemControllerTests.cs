@@ -21,5 +21,19 @@ namespace Tests
             var result = controller.Post(Guid.Parse("6c696970-4c89-46bd-9b89-1fc2c27ef71e"));
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
+
+        [Test]
+        public void result_contains_newly_created_basket_item()
+        {
+            IEnumerable<Basket> baskets = new List<Basket>
+            {
+                new Basket { Id = Guid.Parse("f5b8861f-73e6-4624-b37d-8b8b5b93a229")}
+            };
+
+            var controller = new BasketItemController(baskets);
+            var result = controller.Post(Guid.Parse("f5b8861f-73e6-4624-b37d-8b8b5b93a229"));
+            Assert.That(result, Is.TypeOf<OkObjectResult>());
+            Assert.That(((OkObjectResult)result).Value, Is.TypeOf<BasketItem>());
+        }
     }
 }
