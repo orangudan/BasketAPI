@@ -8,7 +8,7 @@ namespace BasketAPI.Controllers
     [ApiController]
     public class BasketItemController : ControllerBase
     {
-        private IBasketQuery _baskets;
+        private readonly IBasketQuery _baskets;
 
         public BasketItemController(IBasketQuery baskets)
         {

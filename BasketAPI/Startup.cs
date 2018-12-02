@@ -17,16 +17,13 @@ using Microsoft.Extensions.Options;
 namespace BasketAPI
 {
 
-    public class InMemoryBaskets : IBasketQuery, IBasketAdder
+    public class InMemoryBaskets : IBasketQuery, IBasketRepository
     {
         private List<Basket> _baskets = new List<Basket>();
 
-        public Basket AddBasket()
+        public Basket Add()
         {
-            var basket = new Basket
-            {
-                Id = Guid.NewGuid()
-            };
+            var basket = new Basket { Id = Guid.NewGuid() };
             _baskets.Add(basket);
             return basket;
         }
@@ -41,6 +38,11 @@ namespace BasketAPI
         public Basket FindById(Guid id)
         {
             return _baskets.SingleOrDefault(b => b.Id == id);
+        }
+
+        public void Remove(Basket basket)
+        {
+            _baskets.Remove(basket);
         }
     }
 
@@ -59,7 +61,7 @@ namespace BasketAPI
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<InMemoryBaskets>();
             services.AddScoped<IBasketQuery>(s => s.GetService<InMemoryBaskets>());
-            services.AddScoped<IBasketAdder>(s => s.GetService<InMemoryBaskets>());
+            services.AddScoped<IBasketRepository>(s => s.GetService<InMemoryBaskets>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

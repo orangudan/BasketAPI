@@ -8,13 +8,13 @@ namespace BasketAPI.Controllers
     [ApiController]
     public class BasketController : ControllerBase
     {
-        private IBasketQuery _baskets;
-        private IBasketAdder _basketAdder;
+        private readonly IBasketQuery _baskets;
+        private readonly IBasketRepository _basketRepository;
 
-        public BasketController(IBasketQuery baskets, IBasketAdder basketAdder)
+        public BasketController(IBasketQuery baskets, IBasketRepository basketRepository)
         {
             _baskets = baskets;
-            _basketAdder = basketAdder;
+            _basketRepository = basketRepository;
         }
 
         [HttpGet("{id}")]
@@ -31,8 +31,7 @@ namespace BasketAPI.Controllers
         [HttpPost]
         public ActionResult Post()
         {
-            var newBasket = _basketAdder.AddBasket();
-            return Ok(newBasket);
+            return Ok(_basketRepository.Add());
         }
     }
 }

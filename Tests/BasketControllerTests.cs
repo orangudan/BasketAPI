@@ -79,21 +79,26 @@ namespace Tests
         }
     }
 
-    public class InMemoryBasketAdder : IBasketAdder
+    public class InMemoryBasketAdder : IBasketRepository
     {
         private Guid _generatedId;
+        private List<Basket> _baskets = new List<Basket>();
 
         public InMemoryBasketAdder(Guid generatedId)
         {
             _generatedId = generatedId;
         }
 
-        public Basket AddBasket()
+        public Basket Add()
         {
-            return new Basket
-            {
-                Id = _generatedId
-            };
+            var basket = new Basket { Id = _generatedId };
+            _baskets.Add(basket);
+            return basket;
+        }
+
+        public void Remove(Basket basket)
+        {
+            _baskets.Remove(basket);
         }
     }
 
