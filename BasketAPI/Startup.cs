@@ -9,6 +9,10 @@ using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using BasketAPI.Controllers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BasketAPI
 {
@@ -21,9 +25,9 @@ namespace BasketAPI
             return _baskets.SingleOrDefault(b => b.Id == id);
         }
 
-        public Basket Add()
+        public Basket Add(Guid ownerId)
         {
-            var basket = new Basket(Guid.NewGuid());
+            var basket = new Basket(Guid.NewGuid(), ownerId);
             _baskets.Add(basket);
             return basket;
         }
@@ -50,6 +54,30 @@ namespace BasketAPI
             services.AddSingleton<InMemoryBaskets>();
             services.AddScoped<IBasketRepository>(s => s.GetService<InMemoryBaskets>());
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info() {Title = "BasketAPI", Version = "v1"}); });
+            services.AddScoped(s => new TokenGenerator(Configuration["Auth:TokenSecret"]));
+
+            ConfigureAuthentication(services);
+        }
+
+        public void ConfigureAuthentication(IServiceCollection services)
+        {
+            var tokenSecret = Encoding.ASCII.GetBytes(Configuration["Auth:TokenSecret"]);
+
+            services.AddAuthentication(c =>
+                {
+                    c.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    c.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(c =>
+                {
+                    c.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(tokenSecret),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,6 +94,8 @@ namespace BasketAPI
 
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "BasketAPI v1"); });
+
+            app.UseAuthentication();
 
             app.UseHttpsRedirection();
             app.UseMvc();

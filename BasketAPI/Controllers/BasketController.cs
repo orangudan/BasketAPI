@@ -2,12 +2,15 @@
 using BasketAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using BasketAPI.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BasketAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [Produces("application/json")]
+    [Authorize]
     public class BasketController : ControllerBase
     {
         private readonly IBasketRepository _basketRepository;
@@ -34,7 +37,7 @@ namespace BasketAPI.Controllers
         [ProducesResponseType(typeof(Basket), 200)]
         public ActionResult Post()
         {
-            var newBasket = _basketRepository.Add();
+            var newBasket = _basketRepository.Add(User.GetUserId());
             return CreatedAtAction(nameof(Get), new {id = newBasket.Id}, newBasket);
         }
 

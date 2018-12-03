@@ -9,10 +9,12 @@ namespace BasketAPI.Models
         public Guid Id { get; }
 
         public List<Item> Items { get; } = new List<Item>();
+        public Guid OwnerId { get; private set; }
 
-        public Basket(Guid id)
+        public Basket(Guid id, Guid OwnerId)
         {
             Id = id;
+            this.OwnerId = OwnerId;
         }
 
         public Item FindItem(Guid itemId)

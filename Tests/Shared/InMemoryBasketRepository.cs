@@ -22,9 +22,9 @@ namespace Tests.Shared
             return _baskets.SingleOrDefault(b => b.Id == basketId);
         }
 
-        public Basket Add()
+        public Basket Add(Guid ownerId)
         {
-            var basket = new Basket(_generatedId);
+            var basket = new Basket(_generatedId, ownerId);
             _baskets.Add(basket);
             return basket;
         }

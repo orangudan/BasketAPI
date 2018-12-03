@@ -2,12 +2,14 @@
 using BasketAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BasketAPI.Controllers
 {
     [Route("api/basket/{basketId}/[controller]")]
     [ApiController]
     [Produces("application/json")]
+    [Authorize]
     public class ItemController : ControllerBase
     {
         private readonly IBasketRepository _basketRepository;
@@ -24,7 +26,7 @@ namespace BasketAPI.Controllers
         {
             var basket = _basketRepository.FindById(basketId);
 
-            if (basket == null)
+            if (basket == null || basket.OwnerId != Guid.Parse(User.Identity.Name))
                 return NotFound();
 
             var item = basket.FindItem(itemId);
