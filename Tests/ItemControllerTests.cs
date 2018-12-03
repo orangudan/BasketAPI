@@ -83,21 +83,21 @@ namespace Tests
         [Test]
         public void Post_returns_not_found_if_basket_missing()
         {
-            var result = _controller.Post(_missingBasketId, new AddItem());
+            var result = _controller.Post(_missingBasketId, new AddItem(Guid.NewGuid(), 1));
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
         public void Post_returns_not_found_if_basket_does_not_belong_to_user()
         {
-            var result = _controller.Post(_notYourBasket.Id, new AddItem());
+            var result = _controller.Post(_notYourBasket.Id, new AddItem(Guid.NewGuid(), 1));
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
         public void Post_returns_item_that_was_added_to_basket()
         {
-            var result = _controller.Post(_basket.Id, new AddItem());
+            var result = _controller.Post(_basket.Id, new AddItem(Guid.NewGuid(), 1));
             Assert.That(result, Is.TypeOf<CreatedAtActionResult>());
             Assert.That(((CreatedAtActionResult) result).Value, Is.TypeOf<Item>());
         }
@@ -105,28 +105,28 @@ namespace Tests
         [Test]
         public void Update_returns_not_found_if_basket_missing()
         {
-            var result = _controller.Update(_missingBasketId, _item.ItemId, new UpdateItem());
+            var result = _controller.Update(_missingBasketId, _item.ItemId, new UpdateItem(4));
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
         public void Update_returns_not_found_if_item_not_in_basket()
         {
-            var result = _controller.Update(_basket.Id, _missingItemId, new UpdateItem());
+            var result = _controller.Update(_basket.Id, _missingItemId, new UpdateItem(4));
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
         public void Update_returns_not_found_if_basket_does_not_belong_to_user()
         {
-            var result = _controller.Update(_notYourBasket.Id, _notYourItem.ItemId, new UpdateItem());
+            var result = _controller.Update(_notYourBasket.Id, _notYourItem.ItemId, new UpdateItem(4));
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
         public void Update_returns_item_that_was_updated()
         {
-            var result = _controller.Update(_basket.Id, _item.ItemId, new UpdateItem());
+            var result = _controller.Update(_basket.Id, _item.ItemId, new UpdateItem(4));
             Assert.That(result, Is.TypeOf<OkObjectResult>());
             Assert.That(((OkObjectResult) result).Value, Is.TypeOf<Item>());
         }

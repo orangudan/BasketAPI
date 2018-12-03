@@ -4,6 +4,7 @@ using BasketAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using FluentValidation;
 
 namespace BasketAPI.Controllers
 {
@@ -40,6 +41,7 @@ namespace BasketAPI.Controllers
 
         [HttpPost(Name = "PostItem")]
         [ProducesResponseType(typeof(Item), 201)]
+        [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         public ActionResult Post(Guid basketId, AddItem request)
         {
@@ -55,6 +57,7 @@ namespace BasketAPI.Controllers
 
         [HttpPatch("{itemId}", Name = "PatchItem")]
         [ProducesResponseType(typeof(Item), 200)]
+        [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         public ActionResult Update(Guid basketId, Guid itemId, UpdateItem updateItem)
         {
@@ -101,10 +104,38 @@ namespace BasketAPI.Controllers
     {
         public Guid ItemId { get; set; }
         public int Quantity { get; set; }
+
+        public AddItem(Guid itemId, int quantity)
+        {
+            ItemId = itemId;
+            Quantity = quantity;
+        }
+
+        public class Validator : AbstractValidator<AddItem>
+        {
+            public Validator()
+            {
+                RuleFor(x => x.ItemId).NotEmpty();
+                RuleFor(x => x.Quantity).GreaterThan(0);
+            }
+        }
     }
 
     public class UpdateItem
     {
         public int Quantity { get; set; }
+
+        public UpdateItem(int quantity)
+        {
+            Quantity = quantity;
+        }
+
+        public class Validator : AbstractValidator<UpdateItem>
+        {
+            public Validator()
+            {
+                RuleFor(x => x.Quantity).GreaterThan(0);
+            }
+        }
     }
 }

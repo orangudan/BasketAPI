@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using BasketAPI.Security;
+using FluentValidation.AspNetCore;
 
 namespace BasketAPI
 {
@@ -29,7 +30,10 @@ namespace BasketAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddItem.Validator>());
+
             services.AddSingleton<InMemoryBasketRepository>();
             services.AddScoped<IBasketRepository>(s => s.GetService<InMemoryBasketRepository>());
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info() {Title = "BasketAPI", Version = "v1"}); });
