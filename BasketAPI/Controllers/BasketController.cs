@@ -34,7 +34,7 @@ namespace BasketAPI.Controllers
         }
 
         [HttpPost(Name = "PostBasket")]
-        [ProducesResponseType(typeof(Basket), 200)]
+        [ProducesResponseType(typeof(Basket), 201)]
         public ActionResult Post()
         {
             var newBasket = _basketRepository.Add(User.GetUserId());

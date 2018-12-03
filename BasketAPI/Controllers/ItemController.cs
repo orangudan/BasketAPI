@@ -39,7 +39,7 @@ namespace BasketAPI.Controllers
         }
 
         [HttpPost(Name = "PostItem")]
-        [ProducesResponseType(typeof(Item), 200)]
+        [ProducesResponseType(typeof(Item), 201)]
         [ProducesResponseType(404)]
         public ActionResult Post(Guid basketId, AddItem request)
         {

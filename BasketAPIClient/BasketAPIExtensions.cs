@@ -18,9 +18,9 @@ namespace Client
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static void Authenticate(this IBasketAPI operations)
+            public static AuthenticationResponse Authenticate(this IBasketAPI operations)
             {
-                operations.AuthenticateAsync().GetAwaiter().GetResult();
+                return operations.AuthenticateAsync().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -29,9 +29,12 @@ namespace Client
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task AuthenticateAsync(this IBasketAPI operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AuthenticationResponse> AuthenticateAsync(this IBasketAPI operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.AuthenticateWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.AuthenticateWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <param name='operations'>

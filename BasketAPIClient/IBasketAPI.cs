@@ -33,6 +33,12 @@ namespace Client
         /// </summary>
         JsonSerializerSettings DeserializationSettings { get; }
 
+        /// <summary>
+        /// Subscription credentials which uniquely identify client
+        /// subscription.
+        /// </summary>
+        ServiceClientCredentials Credentials { get; }
+
 
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -40,7 +46,7 @@ namespace Client
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse> AuthenticateWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<AuthenticationResponse>> AuthenticateWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='id'>
         /// </param>
