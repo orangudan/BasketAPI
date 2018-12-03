@@ -63,10 +63,10 @@ namespace Tests
         public void Post_returns_item_that_was_added_to_basket()
         {
             var result = _controller.Post(FoundBasketId, new AddItem {ItemId = NewlyAddedItemId, Quantity = 3});
-            Assert.That(result, Is.TypeOf<OkObjectResult>());
-            Assert.That(((OkObjectResult) result).Value, Is.TypeOf<Item>());
+            Assert.That(result, Is.TypeOf<CreatedAtActionResult>());
+            Assert.That(((CreatedAtActionResult) result).Value, Is.TypeOf<Item>());
 
-            var item = (Item) ((OkObjectResult) result).Value;
+            var item = (Item) ((CreatedAtActionResult) result).Value;
             Assert.That(item.ItemId, Is.EqualTo(NewlyAddedItemId));
             Assert.That(item.Quantity, Is.EqualTo(3));
         }

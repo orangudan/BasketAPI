@@ -47,7 +47,7 @@ namespace BasketAPI.Controllers
 
             var newItem = basket.AddItem(request.ItemId, request.Quantity);
 
-            return Ok(newItem);
+            return CreatedAtAction(nameof(Get), new {basketId = basket.Id, itemId = newItem.ItemId}, newItem);
         }
 
         [HttpPatch("{itemId}")]
