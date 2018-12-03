@@ -103,25 +103,30 @@ namespace Tests
         [Test]
         public void Update_returns_not_found_if_basket_missing()
         {
-            var result = _controller.Update(MissingBasketId, _item.ItemId, new UpdateItem {Quantity = 5});
+            var result = _controller.Update(MissingBasketId, _item.ItemId, new UpdateItem());
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
         public void Update_returns_not_found_if_item_not_in_basket()
         {
-            var result = _controller.Update(_basket.Id, MissingItemId, new UpdateItem {Quantity = 5});
+            var result = _controller.Update(_basket.Id, MissingItemId, new UpdateItem());
+            Assert.That(result, Is.TypeOf<NotFoundResult>());
+        }
+
+        [Test]
+        public void Update_returns_not_found_if_basket_does_not_belong_to_user()
+        {
+            var result = _controller.Update(_notYourBasket.Id, _item.ItemId, new UpdateItem());
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
         public void Update_returns_item_that_was_updated()
         {
-            var result = _controller.Update(_basket.Id, _item.ItemId, new UpdateItem {Quantity = 33});
+            var result = _controller.Update(_basket.Id, _item.ItemId, new UpdateItem());
             Assert.That(result, Is.TypeOf<OkObjectResult>());
             Assert.That(((OkObjectResult) result).Value, Is.TypeOf<Item>());
-            var item = (Item) ((OkObjectResult) result).Value;
-            Assert.That(item.Quantity, Is.EqualTo(33));
         }
 
         [Test]

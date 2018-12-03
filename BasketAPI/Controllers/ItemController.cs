@@ -60,7 +60,7 @@ namespace BasketAPI.Controllers
         {
             var basket = _basketRepository.FindById(basketId);
 
-            if (basket == null)
+            if (basket == null || basket.OwnerId != User.GetUserId())
                 return NotFound();
 
             var item = basket.FindItem(itemId);
