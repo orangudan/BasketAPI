@@ -103,6 +103,13 @@ namespace Tests
         }
 
         [Test]
+        public void Post_returns_bad_request_if_item_already_in_basket()
+        {
+            var result = _controller.Post(_basket.Id, new AddItem(_item.ItemId, 5));
+            Assert.That(result, Is.TypeOf<BadRequestResult>());
+        }
+
+        [Test]
         public void Update_returns_not_found_if_basket_missing()
         {
             var result = _controller.Update(_missingBasketId, _item.ItemId, new UpdateItem(4));

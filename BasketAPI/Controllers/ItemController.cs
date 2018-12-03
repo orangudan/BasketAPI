@@ -50,6 +50,9 @@ namespace BasketAPI.Controllers
             if (!ValidBasket(basket))
                 return NotFound();
 
+            if (basket.ContainsItem(request.ItemId))
+                return BadRequest();
+
             var newItem = basket.AddItem(request.ItemId, request.Quantity);
 
             return CreatedAtAction(nameof(Get), new {basketId = basket.Id, itemId = newItem.ItemId}, newItem);

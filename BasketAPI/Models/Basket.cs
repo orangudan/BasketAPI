@@ -27,5 +27,10 @@ namespace BasketAPI.Models
             Items.Add(item);
             return item;
         }
+
+        public bool ContainsItem(Guid itemId)
+        {
+            return Items.Any(item => item.ItemId == itemId);
+        }
     }
 }
