@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Tests.Shared;
@@ -14,9 +13,9 @@ namespace Tests
     [TestFixture]
     public class BasketControllerTests
     {
-        private readonly Guid NewlyCreatedBasketId = Guid.Parse("ab0d1822-06d8-4a63-8761-3f5ac7774671");
-        private readonly Guid FoundBasketId = Guid.Parse("f5b8861f-73e6-4624-b37d-8b8b5b93a229");
-        private readonly Guid MissingBasketId = Guid.Parse("6c696970-4c89-46bd-9b89-1fc2c27ef71e");
+        private readonly Guid NewlyCreatedBasketId = Guid.NewGuid();
+        private readonly Guid FoundBasketId = Guid.NewGuid();
+        private readonly Guid MissingBasketId = Guid.NewGuid();
         private readonly Guid NotYourBasketId = Guid.NewGuid();
 
         private readonly Guid OwnerId = Guid.NewGuid();
