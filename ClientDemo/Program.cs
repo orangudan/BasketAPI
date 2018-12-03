@@ -20,8 +20,8 @@ namespace ClientDemo
             var item = client.PostItem(basket.Id.Value, new AddItem {ItemId = Guid.NewGuid(), Quantity = 5});
             Console.WriteLine($"Added {item.ItemId} to basket {item.Quantity} times");
 
-            client.PatchItem(basket.Id.Value, item.ItemId.Value, new UpdateItem(10));
-            Console.WriteLine($"Updated {item.ItemId} quantity to {item.Quantity}");
+            var updatedItem = client.PatchItem(basket.Id.Value, item.ItemId.Value, new UpdateItem(10));
+            Console.WriteLine($"Updated {item.ItemId} quantity to {updatedItem.Quantity}");
 
             client.DeleteItem(basket.Id.Value, item.ItemId.Value);
             Console.WriteLine($"Deleted {item.ItemId} from basket");
