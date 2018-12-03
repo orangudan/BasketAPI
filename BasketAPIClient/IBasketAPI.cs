@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Client
+namespace BasketAPIClient
 {
     using Microsoft.Rest;
     using Models;

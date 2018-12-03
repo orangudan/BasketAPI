@@ -1,7 +1,7 @@
-﻿using System;
-using Client;
-using Client.Models;
+﻿using BasketAPIClient;
+using BasketAPIClient.Models;
 using Microsoft.Rest;
+using System;
 
 namespace ClientDemo
 {

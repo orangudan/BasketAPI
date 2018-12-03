@@ -7,7 +7,6 @@ namespace BasketAPI.Models
     public class Basket
     {
         public Guid Id { get; }
-
         public List<Item> Items { get; } = new List<Item>();
         public Guid OwnerId { get; }
 

@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Client.Models
+namespace BasketAPIClient.Models
 {
     using Newtonsoft.Json;
     using System.Collections;
