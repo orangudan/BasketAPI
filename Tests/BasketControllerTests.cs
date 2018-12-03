@@ -84,6 +84,13 @@ namespace Tests
         }
 
         [Test]
+        public void Delete_returns_not_found_if_basket_does_not_belong_to_user()
+        {
+            var result = _controller.Delete(NotYourBasketId);
+            Assert.That(result, Is.TypeOf<NotFoundResult>());
+        }
+
+        [Test]
         public void Delete_returns_no_content_if_deleted()
         {
             var result = _controller.Delete(FoundBasketId);

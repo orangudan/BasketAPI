@@ -48,7 +48,7 @@ namespace BasketAPI.Controllers
         {
             var basket = _basketRepository.FindById(id);
 
-            if (basket == null)
+            if (basket == null || basket.OwnerId != User.GetUserId())
                 return NotFound();
 
             _basketRepository.Remove(basket);
