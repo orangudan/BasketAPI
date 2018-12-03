@@ -8,14 +8,7 @@ namespace Tests.Shared
 {
     public class InMemoryBasketRepository : IBasketRepository
     {
-        private readonly Guid _generatedId;
-        private readonly List<Basket> _baskets;
-
-        public InMemoryBasketRepository(Guid generatedId, List<Basket> baskets)
-        {
-            _generatedId = generatedId;
-            _baskets = baskets;
-        }
+        private readonly List<Basket> _baskets = new List<Basket>();
 
         public Basket FindById(Guid basketId)
         {
@@ -24,7 +17,7 @@ namespace Tests.Shared
 
         public Basket Add(Guid ownerId)
         {
-            var basket = new Basket(_generatedId, ownerId);
+            var basket = new Basket(Guid.NewGuid(), ownerId);
             _baskets.Add(basket);
             return basket;
         }

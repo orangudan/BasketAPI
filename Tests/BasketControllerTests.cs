@@ -13,25 +13,24 @@ namespace Tests
     [TestFixture]
     public class BasketControllerTests
     {
-        private readonly Guid NewlyCreatedBasketId = Guid.NewGuid();
-        private readonly Guid FoundBasketId = Guid.NewGuid();
         private readonly Guid MissingBasketId = Guid.NewGuid();
-        private readonly Guid NotYourBasketId = Guid.NewGuid();
 
         private readonly Guid OwnerId = Guid.NewGuid();
 
         private BasketController _controller;
+        private Basket _basket;
+        private Basket _notYourBasket;
 
         [SetUp]
         public void Set_up_controller()
         {
-            var basket = new Basket(FoundBasketId, OwnerId);
-            basket.AddItem(Guid.NewGuid(), 1);
+            var repository = new InMemoryBasketRepository();
+            _basket = repository.Add(OwnerId);
+            _basket.AddItem(Guid.NewGuid(), 1);
 
-            var notYourBasket = new Basket(NotYourBasketId, Guid.NewGuid());
+            _notYourBasket = repository.Add(Guid.NewGuid());
 
-            _controller = new BasketController(
-                new InMemoryBasketRepository(NewlyCreatedBasketId, new List<Basket> {basket, notYourBasket}))
+            _controller = new BasketController(repository)
             {
                 ControllerContext = new ControllerContext
                 {
@@ -56,7 +55,7 @@ namespace Tests
         [Test]
         public void Get_returns_basket_if_it_exists()
         {
-            var result = _controller.Get(FoundBasketId);
+            var result = _controller.Get(_basket.Id);
             Assert.That(result, Is.TypeOf<OkObjectResult>());
             Assert.That(((OkObjectResult) result).Value, Is.TypeOf<Basket>());
         }
@@ -64,7 +63,7 @@ namespace Tests
         [Test]
         public void Get_returns_not_found_if_basket_does_not_belong_to_user()
         {
-            var result = _controller.Get(NotYourBasketId);
+            var result = _controller.Get(_notYourBasket.Id);
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
@@ -86,14 +85,14 @@ namespace Tests
         [Test]
         public void Delete_returns_not_found_if_basket_does_not_belong_to_user()
         {
-            var result = _controller.Delete(NotYourBasketId);
+            var result = _controller.Delete(_notYourBasket.Id);
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]
         public void Delete_returns_no_content_if_deleted()
         {
-            var result = _controller.Delete(FoundBasketId);
+            var result = _controller.Delete(_basket.Id);
             Assert.That(result, Is.TypeOf<NoContentResult>());
         }
     }

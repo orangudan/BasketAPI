@@ -16,13 +16,13 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace BasketAPI
 {
-    public class InMemoryBaskets : IBasketRepository
+    public class InMemoryBasketRepository : IBasketRepository
     {
         private readonly List<Basket> _baskets = new List<Basket>();
 
-        public Basket FindById(Guid id)
+        public Basket FindById(Guid basketId)
         {
-            return _baskets.SingleOrDefault(b => b.Id == id);
+            return _baskets.SingleOrDefault(b => b.Id == basketId);
         }
 
         public Basket Add(Guid ownerId)
@@ -51,8 +51,8 @@ namespace BasketAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddSingleton<InMemoryBaskets>();
-            services.AddScoped<IBasketRepository>(s => s.GetService<InMemoryBaskets>());
+            services.AddSingleton<InMemoryBasketRepository>();
+            services.AddScoped<IBasketRepository>(s => s.GetService<InMemoryBasketRepository>());
             services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info() {Title = "BasketAPI", Version = "v1"}); });
             services.AddScoped(s => new TokenGenerator(Configuration["Auth:TokenSecret"]));
 
