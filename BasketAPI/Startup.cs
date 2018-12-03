@@ -16,28 +16,6 @@ using System.Text;
 
 namespace BasketAPI
 {
-    public class InMemoryBasketRepository : IBasketRepository
-    {
-        private readonly List<Basket> _baskets = new List<Basket>();
-
-        public Basket FindById(Guid basketId)
-        {
-            return _baskets.SingleOrDefault(b => b.Id == basketId);
-        }
-
-        public Basket Add(Guid ownerId)
-        {
-            var basket = new Basket(Guid.NewGuid(), ownerId);
-            _baskets.Add(basket);
-            return basket;
-        }
-
-        public void Remove(Basket basket)
-        {
-            _baskets.Remove(basket);
-        }
-    }
-
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -99,6 +77,28 @@ namespace BasketAPI
 
             app.UseHttpsRedirection();
             app.UseMvc();
+        }
+    }
+
+    public class InMemoryBasketRepository : IBasketRepository
+    {
+        private readonly List<Basket> _baskets = new List<Basket>();
+
+        public Basket FindById(Guid basketId)
+        {
+            return _baskets.SingleOrDefault(b => b.Id == basketId);
+        }
+
+        public Basket Add(Guid ownerId)
+        {
+            var basket = new Basket(Guid.NewGuid(), ownerId);
+            _baskets.Add(basket);
+            return basket;
+        }
+
+        public void Remove(Basket basket)
+        {
+            _baskets.Remove(basket);
         }
     }
 }
