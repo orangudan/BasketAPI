@@ -86,6 +86,13 @@ namespace Tests
         }
 
         [Test]
+        public void Post_returns_not_found_if_basket_does_not_belong_to_user()
+        {
+            var result = _controller.Post(_notYourBasket.Id, new AddItem());
+            Assert.That(result, Is.TypeOf<NotFoundResult>());
+        }
+
+        [Test]
         public void Post_returns_item_that_was_added_to_basket()
         {
             var result = _controller.Post(_basket.Id, new AddItem());

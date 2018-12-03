@@ -2,6 +2,7 @@
 using BasketAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using BasketAPI.Extensions;
 using Microsoft.AspNetCore.Authorization;
 
 namespace BasketAPI.Controllers
@@ -26,7 +27,7 @@ namespace BasketAPI.Controllers
         {
             var basket = _basketRepository.FindById(basketId);
 
-            if (basket == null || basket.OwnerId != Guid.Parse(User.Identity.Name))
+            if (basket == null || basket.OwnerId != User.GetUserId())
                 return NotFound();
 
             var item = basket.FindItem(itemId);
@@ -44,7 +45,7 @@ namespace BasketAPI.Controllers
         {
             var basket = _basketRepository.FindById(basketId);
 
-            if (basket == null)
+            if (basket == null || basket.OwnerId != User.GetUserId())
                 return NotFound();
 
             var newItem = basket.AddItem(request.ItemId, request.Quantity);
