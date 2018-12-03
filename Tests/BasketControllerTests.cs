@@ -17,6 +17,7 @@ namespace Tests
         private readonly Guid NewlyCreatedBasketId = Guid.Parse("ab0d1822-06d8-4a63-8761-3f5ac7774671");
         private readonly Guid FoundBasketId = Guid.Parse("f5b8861f-73e6-4624-b37d-8b8b5b93a229");
         private readonly Guid MissingBasketId = Guid.Parse("6c696970-4c89-46bd-9b89-1fc2c27ef71e");
+        private readonly Guid NotYourBasketId = Guid.NewGuid();
 
         private readonly Guid OwnerId = Guid.NewGuid();
 
@@ -25,11 +26,13 @@ namespace Tests
         [SetUp]
         public void Set_up_controller()
         {
-            var basket = new Basket(FoundBasketId, Guid.NewGuid());
+            var basket = new Basket(FoundBasketId, OwnerId);
             basket.AddItem(Guid.NewGuid(), 1);
 
+            var notYourBasket = new Basket(NotYourBasketId, Guid.NewGuid());
+
             _controller = new BasketController(
-                new InMemoryBasketRepository(NewlyCreatedBasketId, new List<Basket> {basket}))
+                new InMemoryBasketRepository(NewlyCreatedBasketId, new List<Basket> {basket, notYourBasket}))
             {
                 ControllerContext = new ControllerContext
                 {
@@ -57,6 +60,13 @@ namespace Tests
             var result = _controller.Get(FoundBasketId);
             Assert.That(result, Is.TypeOf<OkObjectResult>());
             Assert.That(((OkObjectResult) result).Value, Is.TypeOf<Basket>());
+        }
+
+        [Test]
+        public void Get_returns_not_found_if_basket_does_not_belong_to_user()
+        {
+            var result = _controller.Get(NotYourBasketId);
+            Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
         [Test]

@@ -27,7 +27,7 @@ namespace BasketAPI.Controllers
         {
             var basket = _basketRepository.FindById(id);
 
-            if (basket == null)
+            if (basket == null || basket.OwnerId != User.GetUserId())
                 return NotFound();
 
             return Ok(basket);
