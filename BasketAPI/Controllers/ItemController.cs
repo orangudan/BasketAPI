@@ -20,7 +20,7 @@ namespace BasketAPI.Controllers
             _basketRepository = basketRepository;
         }
 
-        [HttpGet("{itemId}")]
+        [HttpGet("{itemId}", Name = "GetItemById")]
         [ProducesResponseType(typeof(Item), 200)]
         [ProducesResponseType(404)]
         public ActionResult Get(Guid basketId, Guid itemId)
@@ -38,7 +38,7 @@ namespace BasketAPI.Controllers
             return Ok(item);
         }
 
-        [HttpPost]
+        [HttpPost(Name = "PostItem")]
         [ProducesResponseType(typeof(Item), 200)]
         [ProducesResponseType(404)]
         public ActionResult Post(Guid basketId, AddItem request)
@@ -53,7 +53,7 @@ namespace BasketAPI.Controllers
             return CreatedAtAction(nameof(Get), new {basketId = basket.Id, itemId = newItem.ItemId}, newItem);
         }
 
-        [HttpPatch("{itemId}")]
+        [HttpPatch("{itemId}", Name = "PatchItem")]
         [ProducesResponseType(typeof(Item), 200)]
         [ProducesResponseType(404)]
         public ActionResult Update(Guid basketId, Guid itemId, UpdateItem updateItem)
@@ -72,7 +72,7 @@ namespace BasketAPI.Controllers
             return Ok(item);
         }
 
-        [HttpDelete("{itemId}")]
+        [HttpDelete("{itemId}", Name = "DeleteItem")]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         public ActionResult Delete(Guid basketId, Guid itemId)
