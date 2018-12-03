@@ -4,7 +4,7 @@ using System;
 
 namespace Tests.Models
 {
-    [TestFixture()]
+    [TestFixture]
     public class BasketTests
     {
         [Test]
@@ -30,6 +30,16 @@ namespace Tests.Models
             var itemFound = basket.FindItem(itemAdded.ItemId);
             Assert.That(itemFound, Is.Not.Null);
             Assert.That(itemFound.ItemId, Is.EqualTo(itemAdded.ItemId));
+        }
+
+        [Test]
+        public void Remove_item_cannot_be_found_again()
+        {
+            var basket = new Basket(Guid.NewGuid(), Guid.NewGuid());
+            var itemAdded = basket.AddItem(Guid.NewGuid(), 3);
+            basket.RemoveItem(itemAdded);
+            var itemFound = basket.FindItem(itemAdded.ItemId);
+            Assert.That(itemFound, Is.Null);
         }
     }
 }
