@@ -13,9 +13,9 @@ namespace Tests
     [TestFixture]
     public class BasketControllerTests
     {
-        private readonly Guid MissingBasketId = Guid.NewGuid();
+        private readonly Guid _missingBasketId = Guid.NewGuid();
 
-        private readonly Guid OwnerId = Guid.NewGuid();
+        private readonly Guid _ownerId = Guid.NewGuid();
 
         private BasketController _controller;
         private Basket _basket;
@@ -25,7 +25,7 @@ namespace Tests
         public void Set_up_controller()
         {
             var repository = new InMemoryBasketRepository();
-            _basket = repository.Add(OwnerId);
+            _basket = repository.Add(_ownerId);
             _basket.AddItem(Guid.NewGuid(), 1);
 
             _notYourBasket = repository.Add(Guid.NewGuid());
@@ -38,7 +38,7 @@ namespace Tests
                     {
                         User = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
                         {
-                            new Claim(ClaimTypes.Name, OwnerId.ToString())
+                            new Claim(ClaimTypes.Name, _ownerId.ToString())
                         }))
                     }
                 }
@@ -48,7 +48,7 @@ namespace Tests
         [Test]
         public void Get_returns_not_found_if_basket_missing()
         {
-            var result = _controller.Get(MissingBasketId);
+            var result = _controller.Get(_missingBasketId);
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
@@ -78,7 +78,7 @@ namespace Tests
         [Test]
         public void Delete_returns_not_found_if_basket_missing()
         {
-            var result = _controller.Delete(MissingBasketId);
+            var result = _controller.Delete(_missingBasketId);
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
