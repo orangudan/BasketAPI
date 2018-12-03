@@ -6,9 +6,11 @@ namespace BasketAPI.Models
 {
     public class Basket
     {
+        private List<Item> _items { get; } = new List<Item>();
+
         public Guid Id { get; }
-        public List<Item> Items { get; } = new List<Item>();
         public Guid OwnerId { get; }
+        public IEnumerable<Item> Items => _items;
 
         public Basket(Guid id, Guid ownerId)
         {
@@ -24,13 +26,18 @@ namespace BasketAPI.Models
         public Item AddItem(Guid itemId, int quantity)
         {
             var item = new Item(itemId, quantity);
-            Items.Add(item);
+            _items.Add(item);
             return item;
         }
 
         public bool ContainsItem(Guid itemId)
         {
             return Items.Any(item => item.ItemId == itemId);
+        }
+
+        public void RemoveItem(Item item)
+        {
+            _items.Remove(item);
         }
     }
 }

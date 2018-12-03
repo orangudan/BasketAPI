@@ -92,7 +92,7 @@ namespace BasketAPI.Controllers
             if (item == null)
                 return NotFound();
 
-            basket.Items.Remove(item);
+            basket.RemoveItem(item);
 
             return NoContent();
         }
