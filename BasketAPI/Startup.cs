@@ -23,7 +23,7 @@ namespace BasketAPI
 
         public Basket Add()
         {
-            var basket = new Basket {Id = Guid.NewGuid()};
+            var basket = new Basket(Guid.NewGuid());
             _baskets.Add(basket);
             return basket;
         }

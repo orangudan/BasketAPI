@@ -24,7 +24,7 @@ namespace Tests.Shared
 
         public Basket Add()
         {
-            var basket = new Basket {Id = _generatedId};
+            var basket = new Basket(_generatedId);
             _baskets.Add(basket);
             return basket;
         }

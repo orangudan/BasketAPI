@@ -21,20 +21,11 @@ namespace Tests
         [SetUp]
         public void Set_up_controller()
         {
-            var baskets = new List<Basket>
-            {
-                new Basket
-                {
-                    Id = FoundBasketId,
-                    Items = new List<Item>
-                    {
-                        new Item()
-                    }
-                }
-            };
+            var basket = new Basket(FoundBasketId);
+            basket.AddItem(Guid.NewGuid(), 1);
 
             _controller = new BasketController(
-                new InMemoryBasketRepository(NewlyCreatedBasketId, baskets));
+                new InMemoryBasketRepository(NewlyCreatedBasketId, new List<Basket> {basket}));
         }
 
         [Test]
