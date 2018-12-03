@@ -22,7 +22,7 @@ namespace BasketAPI.Models
 
         public Item AddItem(Guid itemId, int quantity)
         {
-            var item = new Item {ItemId = itemId, Quantity = quantity};
+            var item = new Item(itemId, quantity);
             Items.Add(item);
             return item;
         }
