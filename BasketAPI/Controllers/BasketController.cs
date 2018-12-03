@@ -34,7 +34,8 @@ namespace BasketAPI.Controllers
         [ProducesResponseType(typeof(Basket), 200)]
         public ActionResult Post()
         {
-            return Ok(_basketRepository.Add());
+            var newBasket = _basketRepository.Add();
+            return CreatedAtAction(nameof(Get), new {id = newBasket.Id}, newBasket);
         }
 
         [HttpDelete("{id}")]

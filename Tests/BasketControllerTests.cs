@@ -55,9 +55,9 @@ namespace Tests
         public void Post_returns_basket_that_was_created()
         {
             var result = _controller.Post();
-            Assert.That(result, Is.TypeOf<OkObjectResult>());
-            Assert.That(((OkObjectResult) result).Value, Is.TypeOf<Basket>());
-            var basket = (Basket) ((OkObjectResult) result).Value;
+            Assert.That(result, Is.TypeOf<CreatedAtActionResult>());
+            Assert.That(((CreatedAtActionResult) result).Value, Is.TypeOf<Basket>());
+            var basket = (Basket) ((CreatedAtActionResult) result).Value;
             Assert.That(basket.Id, Is.EqualTo(NewlyCreatedBasketId));
         }
 
