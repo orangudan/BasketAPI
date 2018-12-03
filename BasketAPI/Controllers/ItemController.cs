@@ -27,7 +27,7 @@ namespace BasketAPI.Controllers
         {
             var basket = _basketRepository.FindById(basketId);
 
-            if (basket == null || basket.OwnerId != User.GetUserId())
+            if (!ValidBasket(basket))
                 return NotFound();
 
             var item = basket.FindItem(itemId);
@@ -45,7 +45,7 @@ namespace BasketAPI.Controllers
         {
             var basket = _basketRepository.FindById(basketId);
 
-            if (basket == null || basket.OwnerId != User.GetUserId())
+            if (!ValidBasket(basket))
                 return NotFound();
 
             var newItem = basket.AddItem(request.ItemId, request.Quantity);
@@ -60,7 +60,7 @@ namespace BasketAPI.Controllers
         {
             var basket = _basketRepository.FindById(basketId);
 
-            if (basket == null || basket.OwnerId != User.GetUserId())
+            if (!ValidBasket(basket))
                 return NotFound();
 
             var item = basket.FindItem(itemId);
@@ -79,7 +79,7 @@ namespace BasketAPI.Controllers
         {
             var basket = _basketRepository.FindById(basketId);
 
-            if (basket == null || basket.OwnerId != User.GetUserId())
+            if (!ValidBasket(basket))
                 return NotFound();
 
             var item = basket.FindItem(itemId);
@@ -89,6 +89,11 @@ namespace BasketAPI.Controllers
             basket.Items.Remove(item);
 
             return NoContent();
+        }
+
+        private bool ValidBasket(Basket basket)
+        {
+            return basket.Exists() && basket.BelongsTo(User.GetUserId());
         }
     }
 
