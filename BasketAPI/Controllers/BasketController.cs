@@ -1,9 +1,9 @@
-﻿using BasketAPI.Interfaces;
+﻿using BasketAPI.Extensions;
+using BasketAPI.Interfaces;
 using BasketAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using BasketAPI.Extensions;
-using Microsoft.AspNetCore.Authorization;
 
 namespace BasketAPI.Controllers
 {
