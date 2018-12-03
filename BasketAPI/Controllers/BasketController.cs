@@ -27,7 +27,7 @@ namespace BasketAPI.Controllers
         {
             var basket = _basketRepository.FindById(id);
 
-            if (basket == null || basket.OwnerId != User.GetUserId())
+            if (!ValidBasket(basket))
                 return NotFound();
 
             return Ok(basket);
@@ -48,12 +48,17 @@ namespace BasketAPI.Controllers
         {
             var basket = _basketRepository.FindById(id);
 
-            if (basket == null || basket.OwnerId != User.GetUserId())
+            if (!ValidBasket(basket))
                 return NotFound();
 
             _basketRepository.Remove(basket);
 
             return NoContent();
+        }
+
+        private bool ValidBasket(Basket basket)
+        {
+            return basket.Exists() && basket.BelongsTo(User.GetUserId());
         }
     }
 }
