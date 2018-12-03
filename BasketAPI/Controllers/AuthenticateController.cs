@@ -21,7 +21,7 @@ namespace BasketAPI.Controllers
             _tokenGenerator = tokenGenerator;
         }
 
-        [HttpPost]
+        [HttpPost(Name = "Authenticate")]
         public ActionResult Post()
         {
             return Ok(_tokenGenerator.NewToken());
