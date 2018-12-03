@@ -24,6 +24,7 @@ namespace Tests
         private Item _item;
 
         private Basket _notYourBasket;
+        private Item _notYourItem;
 
         [SetUp]
         public void Set_up_controller()
@@ -33,6 +34,7 @@ namespace Tests
             _item = _basket.AddItem(Guid.NewGuid(), 1);
 
             _notYourBasket = repository.Add(Guid.NewGuid());
+            _notYourItem = _notYourBasket.AddItem(Guid.NewGuid(), 3);
 
             _controller = new ItemController(repository)
             {
@@ -66,7 +68,7 @@ namespace Tests
         [Test]
         public void Get_returns_not_found_if_basket_does_not_belong_to_user()
         {
-            var result = _controller.Get(_notYourBasket.Id, _item.ItemId);
+            var result = _controller.Get(_notYourBasket.Id, _notYourItem.ItemId);
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
@@ -117,7 +119,7 @@ namespace Tests
         [Test]
         public void Update_returns_not_found_if_basket_does_not_belong_to_user()
         {
-            var result = _controller.Update(_notYourBasket.Id, _item.ItemId, new UpdateItem());
+            var result = _controller.Update(_notYourBasket.Id, _notYourItem.ItemId, new UpdateItem());
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
@@ -140,6 +142,13 @@ namespace Tests
         public void Delete_returns_not_found_if_item_not_in_basket()
         {
             var result = _controller.Delete(_basket.Id, MissingItemId);
+            Assert.That(result, Is.TypeOf<NotFoundResult>());
+        }
+
+        [Test]
+        public void Delete_returns_not_found_if_basket_does_not_belong_to_user()
+        {
+            var result = _controller.Delete(_notYourBasket.Id, _notYourItem.ItemId);
             Assert.That(result, Is.TypeOf<NotFoundResult>());
         }
 
