@@ -29,15 +29,17 @@ namespace Tests
             basket.AddItem(Guid.NewGuid(), 1);
 
             _controller = new BasketController(
-                new InMemoryBasketRepository(NewlyCreatedBasketId, new List<Basket> {basket}));
-            _controller.ControllerContext = new ControllerContext
+                new InMemoryBasketRepository(NewlyCreatedBasketId, new List<Basket> {basket}))
             {
-                HttpContext = new DefaultHttpContext
+                ControllerContext = new ControllerContext
                 {
-                    User = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
+                    HttpContext = new DefaultHttpContext
                     {
-                        new Claim(ClaimTypes.Name, OwnerId.ToString())
-                    }))
+                        User = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Name, OwnerId.ToString())
+                        }))
+                    }
                 }
             };
         }
