@@ -10,9 +10,9 @@ using Microsoft.IdentityModel.Tokens;
 namespace BasketAPI.Controllers
 {
     
-    [Route("api/[controller]")]
-    [ApiController]
     [AllowAnonymous]
+    [ApiController]
+    [Route("api/[controller]")]
     public class AuthenticateController : ControllerBase
     {
         private readonly TokenGenerator _tokenGenerator;

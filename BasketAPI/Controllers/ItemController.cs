@@ -7,10 +7,10 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BasketAPI.Controllers
 {
-    [Route("api/basket/{basketId}/[controller]")]
     [ApiController]
-    [Produces("application/json")]
     [Authorize]
+    [Produces("application/json")]
+    [Route("api/basket/{basketId}/[controller]")]
     public class ItemController : ControllerBase
     {
         private readonly IBasketRepository _basketRepository;
