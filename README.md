@@ -8,6 +8,8 @@ API representing a shopping basket system.
     cd BasketAPI
     docker build -t basketapi .
     docker run --rm -it -e "Auth:TokenSecret=asdflkjhasdflkjh" -p 4000:80 basketapi
+    
+The service will then be available to use at [http://localhost:4000](http://localhost:4000)
 
 ## Hosted instance
 
