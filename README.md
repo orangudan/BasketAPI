@@ -2,6 +2,6 @@
 
 ## Development
 
-Development URL: https://basketapi-dev-as.azurewebsites.net/
+Development URL: http://dckrbasketapi.centralus.cloudapp.azure.com/
 
-Docs: https://basketapi-dev-as.azurewebsites.net/swagger/index.html
+Docs: http://dckrbasketapi.centralus.cloudapp.azure.com/swagger/index.html
