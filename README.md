@@ -15,8 +15,8 @@ The service will then be available to use at [http://localhost:4000](http://loca
 
 #### API base address
 
-http://dckrbasketapi.centralus.cloudapp.azure.com/
+http://dockerbasketapi.southcentralus.cloudapp.azure.com/
 
 #### Documentation:
 
-http://dckrbasketapi.centralus.cloudapp.azure.com/swagger/index.html
+http://dockerbasketapi.southcentralus.cloudapp.azure.com/swagger/index.html
